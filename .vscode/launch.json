@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "atendimento_cra (Local)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--web-browser-flag",
+        "--disable-web-security",
+        "--dart-define=API_ENV=local"
+      ]
+    },
+    {
+      "name": "atendimento_cra (Homologação)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--web-browser-flag",
+        "--disable-web-security",
+        "--dart-define=API_ENV=homologacao"
+      ]
+    },
+    {
+      "name": "atendimento_cra (Produção)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--web-browser-flag",
+        "--disable-web-security",
+        "--dart-define=API_ENV=producao"
+      ]
+    }
+  ]
+}
