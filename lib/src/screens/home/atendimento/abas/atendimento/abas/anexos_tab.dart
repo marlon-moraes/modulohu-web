@@ -160,7 +160,10 @@ class _AnexosTabState extends State<AnexosTab> {
         anexo.anexoAtdCRABody?.idAtendimentoCRA = widget.atendimentoCarregado.id;
         anexo.anexoAtdCRABody?.idTipoCRA = widget.atendimentoCarregado.tipo?.id;
         anexo.anexoAtdCRABody?.maquina = webBrowserInfo.userAgent;
-        anexo.anexoAtdCRABody?.descricao = 'Anexo do arquivo ${arquivoController.text} para o Atendimento n° ${widget.atendimentoCarregado.codigo}';
+        anexo.anexoAtdCRABody?.descricao =
+            descricaoController.text.isEmpty
+                ? 'Anexo do arquivo ${arquivoController.text} para o Atendimento n° ${widget.atendimentoCarregado.codigo}'
+                : descricaoController.text;
         anexo.anexoAtdCRABody?.idImagem = 0;
         anexo.anexoAtdCRABody?.idUsuInc = widget.pessoaLogada.usuario?.id;
         anexo.anexoAtdCRABody?.idUsuAlt = widget.pessoaLogada.usuario?.id;
@@ -218,7 +221,7 @@ class _AnexosTabState extends State<AnexosTab> {
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           controller: descricaoController,
           text: 'Descrição',
-          enabled: false,
+          enabled: true,
         ),
       );
     }

@@ -32,7 +32,8 @@ Future<bool> reqIncluirTransferencia(Transferencia transferencia, BuildContext c
     try {
       final body = jsonDecode(utf8.decode(response.bodyBytes));
       if (body['sucesso']) {
-        Message(body['mensagem'], true).inputMsg(context);
+        // Message(body['mensagem'], true).inputMsg(context);
+        showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(body['mensagem'])));
         return true;
       } else {
         showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(body['mensagem'])));

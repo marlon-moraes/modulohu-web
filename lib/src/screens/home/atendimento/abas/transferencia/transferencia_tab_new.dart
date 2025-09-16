@@ -11,6 +11,7 @@ import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/atendimento.dart';
 import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
 import 'package:modulohu_web/src/models/responsavel.dart';
+import 'package:modulohu_web/src/models/responsavel_transferencia.dart';
 import 'package:modulohu_web/src/models/transferencia.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/atendimento/abas/atendimento/abas/anexos_tab.dart';
@@ -1143,16 +1144,21 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
         motivoNaoAtendidaSelecionada = CadastrosTransferenciaRes.fromJson(jsonDecode(await _sharedPref.read('motivoNaoAtendida') ?? '{}'));
         meioTransporteSelecionada = CadastrosTransferenciaRes.fromJson(jsonDecode(await _sharedPref.read('meioTransporte') ?? '{}'));
         equipeTransporteSelecionada = CadastrosTransferenciaRes.fromJson(jsonDecode(await _sharedPref.read('equipeTransporte') ?? '{}'));
-        transferencia.responsavel = funcionarioResponsavel;
-        transferencia.precaucao = precaucaoSelecionada;
-        transferencia.convenio = convenioSelecionada;
-        transferencia.coberturaContratual = coberturaContratualSelecionada;
-        transferencia.motivoRejeitado = motivoRejeitadoSelecionada;
-        transferencia.motivoTransferencia = motivoSelecionada;
-        transferencia.tipoInterncao = tipoInternacaoSelecionada;
-        transferencia.solicitacaoAtendida = motivoNaoAtendidaSelecionada;
-        transferencia.meioTransporteTransf = meioTransporteSelecionada;
-        transferencia.equipeTransporteTransf = equipeTransporteSelecionada;
+        transferencia.responsavel = ResponsavelTransferencia(
+          id: funcionarioResponsavel.id,
+          codigo: funcionarioResponsavel.codigo,
+          dtInc: funcionarioResponsavel.dtInc,
+          dtAlt: funcionarioResponsavel.dtAlt,
+        );
+        transferencia.precaucao = precaucaoSelecionada.id != null ? precaucaoSelecionada : null;
+        transferencia.convenio = convenioSelecionada.id != null ? convenioSelecionada : null;
+        transferencia.coberturaContratual = coberturaContratualSelecionada.id != null ? coberturaContratualSelecionada : null;
+        transferencia.motivoRejeitado = motivoRejeitadoSelecionada.id != null ? motivoRejeitadoSelecionada : null;
+        transferencia.motivoTransferencia = motivoSelecionada.id != null ? motivoSelecionada : null;
+        transferencia.tipoInterncao = tipoInternacaoSelecionada.id != null ? tipoInternacaoSelecionada : null;
+        transferencia.solicitacaoAtendida = motivoNaoAtendidaSelecionada.id != null ? motivoNaoAtendidaSelecionada : null;
+        transferencia.meioTransporteTransf = meioTransporteSelecionada.id != null ? meioTransporteSelecionada : null;
+        transferencia.equipeTransporteTransf = equipeTransporteSelecionada.id != null ? equipeTransporteSelecionada : null;
         if (dataController.text.isNotEmpty && horaChegadaController.text.isNotEmpty) {
           transferencia.dtChegada = dateFormatter2('${dataController.text} ${horaChegadaController.text}:00', true);
         }
@@ -1160,18 +1166,20 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
           transferencia.dtSaida = dateFormatter2('${dataController.text} ${horaSaidaController.text}:00', true);
         }
         transferencia.idUsuAlt = IdAtendimentoCRA(id: widget.pessoaLogada.usuario?.id);
-        await reqIncluirTransferencia(transferencia, context);
+        var res = await reqIncluirTransferencia(transferencia, context);
         _mostrarBarraCarregamento();
-        // await _sharedPref.remove('responsavel');
-        // await _sharedPref.remove('precaucao');
-        // await _sharedPref.remove('convenio');
-        // await _sharedPref.remove('coberturaContratual');
-        // await _sharedPref.remove('motivoRejeitado');
-        // await _sharedPref.remove('motivo');
-        // await _sharedPref.remove('tipoInternacao');
-        // await _sharedPref.remove('motivoNaoAtendida');
-        // await _sharedPref.remove('meioTransporte');
-        // await _sharedPref.remove('equipeTransporte');
+        if (res) {
+          // await _sharedPref.remove('responsavel');
+          // await _sharedPref.remove('precaucao');
+          // await _sharedPref.remove('convenio');
+          // await _sharedPref.remove('coberturaContratual');
+          // await _sharedPref.remove('motivoRejeitado');
+          // await _sharedPref.remove('motivo');
+          // await _sharedPref.remove('tipoInternacao');
+          // await _sharedPref.remove('motivoNaoAtendida');
+          // await _sharedPref.remove('meioTransporte');
+          // await _sharedPref.remove('equipeTransporte');
+        }
       }
     }
 
@@ -1546,6 +1554,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
     // Outros objetos
     funcionarioResponsavel = Responsavel();
     convenioSelecionada = CadastrosTransferenciaRes();
+    _limparCampos();
     super.dispose();
   }
 
@@ -1596,6 +1605,75 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
     } else {
       nomePacienteController.text = widget.beneficiarioNome;
     }
+  }
+
+  void _limparCampos() async {
+    await _sharedPref.remove('responsavel');
+    await _sharedPref.remove('precaucao');
+    await _sharedPref.remove('convenio');
+    await _sharedPref.remove('coberturaContratual');
+    await _sharedPref.remove('motivoRejeitado');
+    await _sharedPref.remove('motivo');
+    await _sharedPref.remove('tipoInternacao');
+    await _sharedPref.remove('motivoNaoAtendida');
+    await _sharedPref.remove('meioTransporte');
+    await _sharedPref.remove('equipeTransporte');
+    // Limpa todos os TextEditingController
+    dtSolicitacaoController.clear();
+    idResponsavelController.clear();
+    codResponsavelController.clear();
+    nomeResponsavelController.clear();
+    nomePacienteController.clear();
+    dtNascimentoController.clear();
+    precaucaoController.clear();
+    qualPrecaucaoController.clear();
+    telefoneController.clear();
+    prontuarioController.clear();
+    carteirinhaController.clear();
+    coberturaContratualController.clear();
+    convenioController.clear();
+    equipeTransporteController.clear();
+    meioTransporteController.clear();
+    motivoController.clear();
+    motivoNaoAtendidaController.clear();
+    motivoRejeitadoController.clear();
+    motivoSolicitacaoController.clear();
+    tipoInternacaoController.clear();
+    familiarResponsavelController.clear();
+    contatoFamiliarController.clear();
+    idInstituicaoOrigemController.clear();
+    codInstituicaoOrigemController.clear();
+    nomeInstituicaoOrigemController.clear();
+    leitoController.clear();
+    idInstituicaoReferenciaController.clear();
+    codInstituicaoReferenciaController.clear();
+    nomeInstituicaoReferenciaController.clear();
+    idMedSolController.clear();
+    codMedSolController.clear();
+    nomeMedSolController.clear();
+    contatoMedSolController.clear();
+    idMedRecController.clear();
+    codMedRecController.clear();
+    nomeMedRecController.clear();
+    motivoAprovacaoController.clear();
+    leitoDisponivelController.clear();
+    motivoTransferenciaController.clear();
+    tipoInternacaoNomeController.clear();
+    motivoSolicitacaoAtendidaController.clear();
+    medicosSolicitadosController.clear();
+    dadosClinicosAnotacoesController.clear();
+    horaSaidaController.clear();
+    horaChegadaController.clear();
+    dataController.clear();
+    // Reseta os valores dos RadioListTile
+    setState(() {
+      _sexoValue = null;
+      _coberturaContratualValue = null;
+      _acomodacaoValue = null;
+      _aprovacaolValue = null;
+      _leitoDisponivelValue = null;
+      _solicitacaoAtendidaValue = null;
+    });
   }
 
   void _mostrarBarraCarregamento() {

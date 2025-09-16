@@ -1,6 +1,7 @@
 // 🌎 Project imports:
 import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
 import 'package:modulohu_web/src/models/responsavel.dart';
+import 'package:modulohu_web/src/models/responsavel_transferencia.dart';
 
 class Transferencia {
   String? idEmp;
@@ -23,7 +24,7 @@ class Transferencia {
   String? idMedicoSolicitante;
   String? medicoSolicitanteContato;
   String? idMedicoRecebimento;
-  Responsavel? responsavel;
+  ResponsavelTransferencia? responsavel;
   CadastrosTransferenciaRes? precaucao;
   CadastrosTransferenciaRes? convenio;
   CadastrosTransferenciaRes? coberturaContratual;
@@ -94,7 +95,7 @@ class Transferencia {
     idMedicoSolicitante = json['idMedicoSolicitante'];
     medicoSolicitanteContato = json['medicoSolicitanteContato'];
     idMedicoRecebimento = json['idMedicoRecebimento'];
-    responsavel = json['responsavel'] != null ? Responsavel.fromJson(json['responsavel']) : null;
+    responsavel = json['responsavel'] != null ? ResponsavelTransferencia.fromJson(json['responsavel']) : null;
     precaucao = json['precaucao'] != null ? CadastrosTransferenciaRes.fromJson(json['precaucao']) : null;
     convenio = json['convenio'] != null ? CadastrosTransferenciaRes.fromJson(json['convenio']) : null;
     coberturaContratual = json['coberturaContratual'] != null ? CadastrosTransferenciaRes.fromJson(json['coberturaContratual']) : null;

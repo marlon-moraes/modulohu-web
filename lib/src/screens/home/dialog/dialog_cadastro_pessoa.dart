@@ -68,7 +68,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
       ),
       children: [
         SizedBox(
-          width: Responsive.isLargeScreen(context) ? size.width * 0.5 : size.width * 0.9,
+          width: Responsive.isLargeScreen(context) ? size.width * 0.5 : size.width,
           child: Form(
             key: _formKey,
             child: Column(

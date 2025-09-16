@@ -156,7 +156,7 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
       ),
       children: [
         SizedBox(
-          width: Responsive.isLargeScreen(context) ? size.width * 0.3 : size.width * 0.9,
+          width: Responsive.isLargeScreen(context) ? size.width * 0.3 : size.width,
           child: Form(
             key: _formKey,
             child: Column(
@@ -208,42 +208,43 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
                       ),
                       if (widget.title == 'Status')
                         Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text('Ativo?'),
-                              if (Responsive.isLargeScreen(context)) Expanded(child: SizedBox()),
+                              // if (Responsive.isLargeScreen(context)) Expanded(child: SizedBox()),
                               Expanded(
-                                flex: 2,
-                                child:
-                                // RadioGroup<bool?>(
-                                //   onChanged: (value) => setState(() => _ativoValue = value),
-                                //   child: Column(
-                                //     crossAxisAlignment: CrossAxisAlignment.start,
-                                //     children: [
-                                //       ListTile(title: const Text('Sim'), leading: Radio(value: true)),
-                                //       ListTile(title: const Text('Não'), leading: Radio(value: false)),
-                                //     ],
-                                //   ),
-                                // ),
-                                RadioListTile(
-                                  title: const Text('Sim'),
-                                  value: true,
+                                child: RadioGroup(
                                   groupValue: _ativoValue,
                                   onChanged: (value) => setState(() => _ativoValue = value),
+                                  child: const Row(
+                                    children: [
+                                      Expanded(flex: 2, child: RadioListTile(title: Text('Sim'), value: true)),
+                                      Expanded(flex: 2, child: RadioListTile(title: Text('Não'), value: false)),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: RadioListTile(
-                                  title: const Text('Não'),
-                                  value: false,
-                                  groupValue: _ativoValue,
-                                  onChanged: (value) => setState(() => _ativoValue = value),
-                                ),
-                              ),
-                              if (Responsive.isLargeScreen(context)) Expanded(child: SizedBox()),
+                              // Expanded(
+                              //   flex: 2,
+                              //   child: RadioListTile(
+                              //     title: const Text('Sim'),
+                              //     value: true,
+                              //     groupValue: _ativoValue,
+                              //     onChanged: (value) => setState(() => _ativoValue = value),
+                              //   ),
+                              // ),
+                              // Expanded(
+                              //   flex: 2,
+                              //   child: RadioListTile(
+                              //     title: const Text('Não'),
+                              //     value: false,
+                              //     groupValue: _ativoValue,
+                              //     onChanged: (value) => setState(() => _ativoValue = value),
+                              //   ),
+                              // ),
+                              // if (Responsive.isLargeScreen(context)) Expanded(child: SizedBox()),
                             ],
                           ),
                         ),

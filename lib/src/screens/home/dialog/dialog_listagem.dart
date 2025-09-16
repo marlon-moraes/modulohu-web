@@ -228,7 +228,7 @@ class _DialogListagemState extends State<DialogListagem> {
       contentPadding: EdgeInsets.all(4),
       titlePadding: EdgeInsets.all(0),
       content: SizedBox(
-        width: Responsive.isLargeScreen(context) ? size.width * 0.33 : size.width * 0.99,
+        width: Responsive.isLargeScreen(context) ? size.width * 0.33 : size.width,
         child: Scrollbar(
           controller: scrollController,
           thumbVisibility: true,

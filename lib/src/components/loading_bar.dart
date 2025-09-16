@@ -30,7 +30,7 @@ Widget loadingBar(bool loading) {
     child:
         loading
             ? LinearProgressIndicator(
-              valueColor: const AlwaysStoppedAnimation(loadingBarColor),
+              valueColor: const AlwaysStoppedAnimation(Themes.loadingBarColor),
               backgroundColor: Colors.grey.withValues(alpha: 0.1),
               minHeight: 8,
             )

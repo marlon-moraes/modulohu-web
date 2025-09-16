@@ -76,8 +76,8 @@ class MyApp extends StatelessWidget {
       title: env.title,
       routerConfig: router,
       debugShowCheckedModeBanner: false,
-      darkTheme: darkThemeData,
-      theme: lightThemeData,
+      darkTheme: Themes.darkThemeData,
+      theme: Themes.lightThemeData,
     );
   }
 }

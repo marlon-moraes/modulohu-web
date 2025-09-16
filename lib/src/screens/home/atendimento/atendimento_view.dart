@@ -449,7 +449,10 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             ),
           ),
           if (carregandoBeneficiario)
-            Container(margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), child: CircularProgressIndicator(color: loadingBarColor)),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: CircularProgressIndicator(color: Themes.loadingBarColor),
+            ),
         ],
       );
     }
@@ -953,6 +956,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                           length: 3,
                           child: Container(
                             decoration: BoxDecoration(border: Border.all(color: theme.colorScheme.primary), borderRadius: BorderRadius.circular(4)),
+                            margin: EdgeInsets.symmetric(horizontal: 8),
                             child: Column(
                               children: [
                                 TabBar(
@@ -1150,13 +1154,6 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                     ),
                   //? TRANSFERÊNCIA
                   if (transferencia)
-                    // TransferenciaTab(
-                    //   pessoaLogada: widget.pessoaLogada,
-                    //   idAtendimentoCRA: atendimentoCarregado.id ?? '',
-                    //   atendimentoCarregado: atendimentoCarregado,
-                    //   isModoInclusao: isModoInclusao,
-                    //   isCanceladoFinalizado: isCanceladoFinalizado,
-                    // ),
                     TransferenciaTabNew(
                       pessoaLogada: pessoaLogada,
                       atendimentoCarregado: atendimentoCarregado,

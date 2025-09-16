@@ -55,7 +55,7 @@ Future<String> reqCarregarTelefonePessoa(String pessoa, BuildContext context) as
     try {
       final body = jsonDecode(utf8.decode(response.bodyBytes));
       if (body['sucesso']) {
-        Message(body['mensagem'], true).inputMsg(context);
+        // Message(body['mensagem'], true).inputMsg(context);
         var res = Telefone.fromJson(body['telefonePessoa']);
         if (res.numero!.length == 8) {
           return '(${res.ddd})${res.numero!.substring(0, 4)}-${res.numero!.substring(4)}';
