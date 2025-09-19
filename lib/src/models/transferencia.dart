@@ -1,6 +1,5 @@
 // 🌎 Project imports:
 import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
-import 'package:modulohu_web/src/models/responsavel.dart';
 import 'package:modulohu_web/src/models/responsavel_transferencia.dart';
 
 class Transferencia {

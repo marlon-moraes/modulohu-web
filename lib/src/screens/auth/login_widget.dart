@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
+import 'package:modulohu_web/src/components/seletor_cidade_por_estado.dart';
 import 'package:modulohu_web/src/services/api/req/auth_req.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -109,6 +110,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ],
                   ),
+                  SeletorCidadePorEstado(),
                 ],
               ),
             ),

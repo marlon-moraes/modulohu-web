@@ -9,6 +9,7 @@ dependencies:
   brasil_fields: ^1.15.0
   cupertino_icons: ^1.0.8
   device_info_plus: ^12.1.0
+  dropdown_search: ^5.0.6
   easy_dynamic_theme: ^2.3.1
   file_picker: ^10.0.0
   flutter:
