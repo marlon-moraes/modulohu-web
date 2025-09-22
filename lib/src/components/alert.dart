@@ -4,24 +4,24 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 
-/// Um widget que exibe um diálogo de alerta com conteúdo personalizável.
+/// Um widget que exibe um dialog de alerta com conteúdo personalizável.
 ///
-/// O widget [Alert] é um widget com estado que apresenta um diálogo modal
+/// O widget [Alert] é um widget com estado que apresenta um dialog modal
 /// com um cabeçalho, conteúdo e um botão de ação. Pode ser usado para mostrar
 /// mensagens de sucesso ou aviso, juntamente com qualquer conteúdo personalizado
 /// fornecido pelo usuário.
 ///
-/// O diálogo pode ser configurado para exibir um cabeçalho, um título de sucesso ou
-/// aviso, e um botão para fechar o diálogo.
+/// O dialog pode ser configurado para exibir um cabeçalho, um título de sucesso ou
+/// aviso, e um botão para fechar o dialog.
 ///
 /// ## Parâmetros:
 /// - [buttonColor]: A cor do botão de ação. O padrão é `Colors.blueAccent`.
 /// - [buttonText]: O texto exibido no botão de ação. O padrão é `'Fechar'`.
-/// - [success]: Um booleano que indica se o alerta é uma mensagem de sucesso. Se verdadeiro, o título exibirá "SUCESSO". Se falso, exibirá "ATENÇÃO".
-/// - [header]: Uma string que representa o cabeçalho do diálogo de alerta. Se vazio, um título padrão será mostrado com base no parâmetro [success].
-/// - [title]: Um booleano que indica se o cabeçalho deve ser exibido como um título. O padrão é `false`.
-/// - [isModal]: Um booleano que indica se o diálogo é modal. Se verdadeiro, o diálogo terá uma cor de fundo secundária.
-/// - [child]: Um widget que representa o conteúdo principal do diálogo de alerta. Este é um parâmetro obrigatório.
+/// - [success]: Um boolean que indica se o alerta é uma mensagem de sucesso. Se verdadeiro, o título exibirá "SUCESSO". Se falso, exibirá "ATENÇÃO".
+/// - [header]: Uma string que representa o cabeçalho do dialog de alerta. Se vazio, um título padrão será mostrado com base no parâmetro [success].
+/// - [title]: Um boolean que indica se o cabeçalho deve ser exibido como um título. O padrão é `false`.
+/// - [isModal]: Um boolean que indica se o dialog é modal. Se verdadeiro, o dialog terá uma cor de fundo secundária.
+/// - [child]: Um widget que representa o conteúdo principal do dialog de alerta. Este é um parâmetro obrigatório.
 ///
 /// ## Exemplo:
 /// ```dart
@@ -36,7 +36,7 @@ import 'package:modulohu_web/src/components/components.dart';
 /// ```
 ///
 /// ## Uso:
-/// Este widget pode ser usado em qualquer parte da aplicação onde um diálogo
+/// Este widget pode ser usado em qualquer parte da aplicação onde um dialog
 /// de alerta é necessário. Ele fornece uma maneira flexível de exibir mensagens e
 /// conteúdo personalizado para o usuário.
 class Alert extends StatefulWidget {

@@ -44,6 +44,7 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    AuthReq authReq = AuthReq();
 
     Widget haveTenCharacters() {
       return Expanded(
@@ -134,7 +135,7 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             _mostrarBarraCarregamento();
-            retorno = await reqAlterarSenha(userController.text, newPasswordController.text, context);
+            retorno = await authReq.reqAlterarSenha(userController.text, newPasswordController.text, context);
           }
           if (retorno) {
             _mostrarBarraCarregamento();

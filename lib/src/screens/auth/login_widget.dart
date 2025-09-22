@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
-import 'package:modulohu_web/src/components/seletor_cidade_por_estado.dart';
 import 'package:modulohu_web/src/services/api/req/auth_req.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -23,6 +22,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final passWordController = TextEditingController();
   final passwordFocus = FocusNode();
   var barraCarregamento = false;
+  AuthReq authReq = AuthReq();
 
   Future<void> _logar() async {
     if (!barraCarregamento) {
@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
         _mostrarBarraCarregamento();
-        var res = await reqLogon(userController.text, passWordController.text, context);
+        var res = await authReq.reqLogon(userController.text, passWordController.text, context);
         if (!context.mounted) return;
         if (res) {
           userController.clear();
@@ -110,7 +110,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ],
                   ),
-                  SeletorCidadePorEstado(),
+                  // SeletorCidadePorEstado(),
                 ],
               ),
             ),

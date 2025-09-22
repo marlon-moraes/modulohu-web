@@ -32,12 +32,12 @@ String dateFormatter(String date) {
 /// Formata uma string de data para o formato especificado.
 ///
 /// A função [dateFormatter2] recebe uma string que representa uma data
-/// e um booleano que indica se o tempo deve ser incluído no formato.
+/// e um boolean que indica se o tempo deve ser incluído no formato.
 /// Retorna a data formatada no formato `yyyy-MM-dd` ou `yyyy-MM-dd HH:mm:ss`.
 ///
 /// ## Parâmetros:
 /// - [date]: A string que representa a data a ser formatada.
-/// - [withTime]: Um booleano que indica se o tempo deve ser incluído
+/// - [withTime]: Um boolean que indica se o tempo deve ser incluído
 ///   na formatação. Se verdadeiro, o formato será `yyyy-MM-dd HH:mm:ss`.
 ///   Se falso, o formato será `yyyy-MM-dd`.
 ///

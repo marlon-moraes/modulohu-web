@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 ///
 /// ## Propriedades:
 /// - [message]: O texto da mensagem a ser exibida.
-/// - [success]: Um booleano que indica se a mensagem é de sucesso.
+/// - [success]: Um boolean que indica se a mensagem é de sucesso.
 /// - [duration]: A duração em segundos que a mensagem será exibida. O padrão é 4 segundos.
 ///
 /// ## Construtor:

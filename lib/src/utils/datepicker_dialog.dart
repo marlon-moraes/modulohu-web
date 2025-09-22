@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 ///
-/// A função [selecionarData] exibe um diálogo de seleção de data e, se
+/// A função [selecionarData] exibe um dialog de seleção de data e, se
 /// uma data for escolhida, formata essa data e a atribui ao controlador
 /// de texto fornecido.
 ///
 /// ## Parâmetros:
 /// - [controller]: Um [TextEditingController] que será atualizado com
 ///   a data formatada após a seleção.
-/// - [isInicioDia]: Um booleano que indica se a data deve ser formatada
+/// - [isInicioDia]: Um boolean que indica se a data deve ser formatada
 ///   como início do dia (00:00:00) ou fim do dia (23:59:59). Se `null`,
 ///   a data será formatada apenas como `dd/MM/yyyy`.
 /// - [context]: O contexto do widget que chama a função, necessário
-///   para exibir o diálogo de seleção de data.
+///   para exibir o dialog de seleção de data.
 ///
 /// ## Retorno:
 /// Esta função não retorna um valor. Ela atualiza o texto do controlador

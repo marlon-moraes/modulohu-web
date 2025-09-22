@@ -19,6 +19,50 @@ import 'package:modulohu_web/src/services/api/http_interceptor.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
 
+/// Classe responsável por realizar requisições HTTP para a API.
+///
+/// A classe [Requisition] encapsula a lógica de envio de requisições HTTP
+/// utilizando diferentes métodos (GET, POST, PUT, DELETE, PATCH, HEAD).
+/// Ela utiliza um cliente HTTP com interceptor para registrar logs das
+/// requisições e respostas, além de tratar erros e exibir mensagens
+/// amigáveis ao usuário.
+///
+/// ## Propriedades:
+/// - [endpoint]: Endpoint da API para o qual a requisição será enviada.
+/// - [params]: Parâmetros opcionais para a requisição.
+/// - [client]: Instância do cliente HTTP com interceptor de logging.
+///
+/// ## Métodos:
+///
+/// ### req
+/// Realiza uma requisição HTTP para o endpoint especificado, utilizando o método informado.
+///
+/// - **Parâmetros:**
+///   - [method]: Enum [HttpRequests] que define o tipo de requisição (GET, POST, etc).
+///   - [json]: Corpo da requisição (para métodos que aceitam body).
+///   - [context]: Contexto do widget, utilizado para exibir dialogs de erro.
+///   - [header]: Cabeçalhos opcionais para a requisição.
+///
+/// - **Retorno:**
+///   Retorna um `Future<http.Response?>` com a resposta da requisição, ou `null` em caso de erro.
+///
+/// - **Tratamento de Erros:**
+///   - Erros de conexão (ex: sem internet) lançam uma [ApiException].
+///   - Erros de status HTTP (ex: 400, 403, 404, 409, 500) são tratados e exibidos via dialog.
+///   - Mensagens de erro são extraídas do corpo da resposta ou exibidas como HTML se necessário.
+///
+/// ## Exemplo de Uso:
+/// ```dart
+/// final requisition = Requisition('/api/endpoint');
+/// final response = await requisition.req(HttpRequests.GET, null, context);
+/// if (response != null) {
+///   print(response.body);
+/// }
+/// ```
+///
+/// ## Uso:
+/// Utilize esta classe para realizar chamadas à API em qualquer parte da aplicação.
+/// Ela centraliza o tratamento de erros e facilita o envio de requisições HTTP.
 class Requisition {
   final String endpoint;
   final Map<String, dynamic>? params;

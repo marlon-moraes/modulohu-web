@@ -12,7 +12,7 @@ import 'package:modulohu_web/src/themes/theme.dart';
 /// retornado.
 ///
 /// ## Parâmetros:
-/// - [loading]: Um booleano que indica se a barra de carregamento deve
+/// - [loading]: Um boolean que indica se a barra de carregamento deve
 ///   ser exibida. Se verdadeiro, a barra de carregamento será mostrada;
 ///   se falso, um [SizedBox] com altura de 8 pixels será retornado.
 ///

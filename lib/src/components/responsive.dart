@@ -21,9 +21,9 @@ import 'package:flutter/material.dart';
 /// - `mediumScreenSize`: Define o limite inferior para telas médias (800 pixels).
 ///
 /// ## Métodos Estáticos:
-/// - [isLargeScreen]: Retorna um booleano indicando se a tela é grande.
-/// - [isMediumScreen]: Retorna um booleano indicando se a tela é média.
-/// - [isSmallScreen]: Retorna um booleano indicando se a tela é pequena.
+/// - [isLargeScreen]: Retorna um boolean indicando se a tela é grande.
+/// - [isMediumScreen]: Retorna um boolean indicando se a tela é média.
+/// - [isSmallScreen]: Retorna um boolean indicando se a tela é pequena.
 ///
 /// ## Exemplo:
 /// ```dart

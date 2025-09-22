@@ -1,9 +1,44 @@
-import 'package:dropdown_search/dropdown_search.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:dropdown_search/dropdown_search.dart';
+
+// 🌎 Project imports:
 import 'package:modulohu_web/src/models/cidade.dart';
 import 'package:modulohu_web/src/models/estado.dart';
 import 'package:modulohu_web/src/services/api/ibge_serv.dart';
 
+/// Widget para seleção de cidade baseada no estado (UF).
+///
+/// O widget [SeletorCidadePorEstado] permite ao usuário selecionar um estado brasileiro
+/// e, em seguida, escolher uma cidade pertencente ao estado selecionado. Utiliza
+/// dropdowns com busca assíncrona, integrando-se à API do IBGE para obter os dados.
+///
+/// ## Funcionamento:
+/// - O usuário seleciona um estado (UF) em um dropdown com busca.
+/// - Após selecionar o estado, o dropdown de cidades é habilitado e exibe apenas as cidades
+///   pertencentes ao estado selecionado.
+/// - Ao trocar o estado, a seleção de cidade é limpa automaticamente.
+///
+/// ## Parâmetros:
+/// Este widget não recebe parâmetros no construtor.
+///
+/// ## Exemplo de Uso:
+/// ```dart
+/// SeletorCidadePorEstado()
+/// ```
+///
+/// ## Uso:
+/// Este widget pode ser utilizado em formulários ou telas onde é necessário
+/// que o usuário selecione uma cidade a partir de um estado brasileiro.
+/// É útil para cadastros, filtros e buscas geográficas.
+///
+/// ## Detalhes Técnicos:
+/// - Utiliza o pacote [dropdown_search] para os campos de seleção.
+/// - Os dados de estados e cidades são obtidos de forma assíncrona via [IBGEService].
+/// - O campo de cidade é zerado automaticamente ao trocar o estado.
+/// - Permite busca por nome ou sigla nos estados e por nome nas cidades.
 class SeletorCidadePorEstado extends StatefulWidget {
   const SeletorCidadePorEstado({super.key});
 
@@ -12,7 +47,7 @@ class SeletorCidadePorEstado extends StatefulWidget {
 }
 
 class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
-  final IbgeService _ibgeService = IbgeService();
+  final IBGEService _ibgeService = IBGEService();
 
   // Variáveis para armazenar os itens selecionados
   Estado? _estadoSelecionado;
@@ -33,7 +68,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             popupProps: PopupProps.menu(
               searchFieldProps: TextFieldProps(
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.all(8),
                   labelText: 'Pesquisar Estado',
                   border: OutlineInputBorder(),
                   isDense: true,
@@ -59,7 +94,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             // Decoração do campo
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: EdgeInsets.all(8),
                 hintText: 'Selecione um estado',
                 border: OutlineInputBorder(),
                 labelText: 'Estado (UF)',
@@ -94,7 +129,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             popupProps: const PopupProps.menu(
               searchFieldProps: TextFieldProps(
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.all(8),
                   labelText: 'Pesquisar Cidade',
                   border: OutlineInputBorder(),
                   isDense: true,
@@ -112,7 +147,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             compareFn: (a, b) => a.id == b.id,
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: EdgeInsets.all(8),
                 hintText: 'Selecione uma cidade',
                 border: OutlineInputBorder(),
                 labelText: 'Cidade',

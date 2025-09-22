@@ -17,7 +17,7 @@ import 'package:modulohu_web/src/utils/logout.dart';
 /// e pode incluir uma barra de abas na parte inferior.
 ///
 /// ## Parâmetros:
-/// - [isAuth]: Um booleano que indica se o usuário está autenticado.
+/// - [isAuth]: Um boolean que indica se o usuário está autenticado.
 /// - [title]: Um texto opcional que será exibido como título no cabeçalho.
 /// - [bottom]: Um widget [TabBar] opcional que pode ser exibido na parte inferior do cabeçalho.
 ///

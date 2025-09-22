@@ -15,14 +15,14 @@ import 'package:flutter/services.dart';
 /// - [onChanged]: Um callback chamado quando o texto é alterado.
 /// - [onSaved]: Um callback chamado quando o campo é salvo.
 /// - [margin]: Margens ao redor do campo de texto. O padrão é `EdgeInsets.all(0)`.
-/// - [isPasswordField]: Um booleano que indica se o campo deve ser tratado como um campo de senha. O padrão é `false`.
+/// - [isPasswordField]: Um boolean que indica se o campo deve ser tratado como um campo de senha. O padrão é `false`.
 /// - [focusNode]: Um [FocusNode] que pode ser usado para gerenciar o foco do campo.
 /// - [enter]: Um callback chamado quando a tecla "Enter" é pressionada.
-/// - [selectable]: Um booleano que indica se o campo pode ser selecionado. O padrão é `false`.
-/// - [autoFocus]: Um booleano que indica se o campo deve receber foco automaticamente ao ser exibido. O padrão é `false`.
+/// - [selectable]: Um boolean que indica se o campo pode ser selecionado. O padrão é `false`.
+/// - [autoFocus]: Um boolean que indica se o campo deve receber foco automaticamente ao ser exibido. O padrão é `false`.
 /// - [icon]: Um ícone que será exibido ao lado do campo de texto.
-/// - [enabled]: Um booleano que indica se o campo está habilitado. O padrão é `true`.
-/// - [border]: Um booleano que indica se o campo deve ter uma borda. O padrão é `true`.
+/// - [enabled]: Um boolean que indica se o campo está habilitado. O padrão é `true`.
+/// - [border]: Um boolean que indica se o campo deve ter uma borda. O padrão é `true`.
 /// - [hint]: Um texto de dica que será exibido quando o campo estiver vazio.
 /// - [text]: O texto do rótulo que será exibido acima do campo.
 ///
