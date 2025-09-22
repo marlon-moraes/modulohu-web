@@ -33,6 +33,7 @@ class _TransferenciaTabState extends State<TransferenciaTab> {
   final _formKey = GlobalKey<FormState>();
   final observacaoController = TextEditingController();
   var barraCarregamento = false;
+  TransferenciaReq transferenciaReq = TransferenciaReq();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _TransferenciaTabState extends State<TransferenciaTab> {
       if (!barraCarregamento) {
         _formKey.currentState!.save();
         _mostrarBarraCarregamento();
-        var res = await reqIncluirTransferencia(transferencia, context);
+        var res = await transferenciaReq.reqIncluirTransferencia(transferencia, context);
         if (res) _limparCampos();
         _mostrarBarraCarregamento();
       }

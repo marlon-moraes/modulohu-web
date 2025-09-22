@@ -147,6 +147,11 @@ class _ListagemWidgetState extends State<ListagemWidget> {
   var statusCarregado = Status();
   var selecionarTodos = false;
   var barraCarregamento = false;
+  AtendimentoReq atendimentoReq = AtendimentoReq();
+  AssuntoReq assuntoReq = AssuntoReq();
+  ResponsavelReq responsavelReq = ResponsavelReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +171,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
         filtro.responsavel = idResponsavelController.text.isNotEmpty ? idResponsavelController.text : null;
         filtro.status = idStatusController.text.isNotEmpty ? idStatusController.text : null;
         filtro.prestador = idMedSolController.text.isNotEmpty ? idMedSolController.text : null;
-        var res = await reqListarAtendimento(filtro, false, context);
+        var res = await atendimentoReq.reqListarAtendimento(filtro, false, context);
         setState(() => _atendimentos = res);
         _mostrarBarraCarregamento();
       }
@@ -187,7 +192,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
               onTap: () async {
-                final res = await reqListarTipoAtendimento(context);
+                final res = await tipoAtendimentoReq.reqListarTipoAtendimento(context);
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -228,7 +233,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
               onTap: () async {
-                final res = await reqListarAssunto(context);
+                final res = await assuntoReq.reqListarAssunto(context);
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -269,7 +274,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
               onTap: () async {
-                final res = await reqListarStatus(true, true, context);
+                final res = await statusReq.reqListarStatus(true, true, context);
                 await showDialog(
                   context: context,
                   builder: (context) {
@@ -351,7 +356,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
               onTap: () async {
-                final res = await reqListarResponsavel(context);
+                final res = await responsavelReq.reqListarResponsavel(context);
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -387,12 +392,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
     }
 
     Widget nome() {
-      return FormTextField(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        controller: nomeNomeController,
-        enabled: true,
-        text: 'Nome',
-      );
+      return FormTextField(margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), controller: nomeNomeController, enabled: true, text: 'Nome');
     }
 
     Widget dtSolIni() {
@@ -747,14 +747,14 @@ class _ListagemWidgetState extends State<ListagemWidget> {
   }
 
   Future<void> _carregarDados() async {
-    final resStatus = await reqListarStatus(true, true, context);
+    final resStatus = await statusReq.reqListarStatus(true, true, context);
     for (var element in resStatus) {
       if (element.nome == 'ABERTO') {
         statusCarregado = element;
         break;
       }
     }
-    final resAtendimento = await reqListarAtendimento(AtendimentoSC(status: statusCarregado.id), false, context);
+    final resAtendimento = await atendimentoReq.reqListarAtendimento(AtendimentoSC(status: statusCarregado.id), false, context);
     if (!mounted) return;
     setState(() {
       _atendimentos = resAtendimento;

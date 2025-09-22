@@ -53,6 +53,8 @@ class ProcedimentosDataSource extends DataTableSource {
 
   ProcedimentosDataSource(this._list, this.size, this.onSelect, this.alterarModo, this.context);
 
+  ProcedimentoReq procedimentoReq = ProcedimentoReq();
+
   @override
   bool get isRowCountApproximate => false;
 
@@ -67,7 +69,7 @@ class ProcedimentosDataSource extends DataTableSource {
     final item = _list[index];
 
     Future<void> excluirProcedimento(String id, int index) async {
-      await reqExcluirProcedimento(id, context);
+      await procedimentoReq.reqExcluirProcedimento(id, context);
       _list.removeAt(index);
       notifyListeners();
     }
@@ -124,6 +126,10 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
   RetornoAtendimento? _selectedValue;
   var isModoInclusaoProcedimento = true;
   var barraCarregamento = false;
+  AgendaMedicaReq agendaMedicaReq = AgendaMedicaReq();
+  EspecialidadeReq especialidadeReq = EspecialidadeReq();
+  EspecializacaoReq especializacaoReq = EspecializacaoReq();
+  ProcedimentoReq procedimentoReq = ProcedimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +158,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
         procedimentoAgendaMedica.idUsuInc = widget.pessoaLogada.usuario?.id;
         procedimentoAgendaMedica.idUsuAlt = widget.pessoaLogada.usuario?.id;
         _mostrarBarraCarregamento();
-        var res = await reqIncluirProcedimento(agendamedica, procedimentoAgendaMedica, context);
+        var res = await procedimentoReq.reqIncluirProcedimento(agendamedica, procedimentoAgendaMedica, context);
         if (res.id != null) {
           setState(() => procedimentos.add(res));
           _limparCampos();
@@ -175,7 +181,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
         procedimentoAgendaMedica.dtInc = procedimentoSelecionado.dtInc;
         procedimentoAgendaMedica.dtAlt = DateTime.now().toString();
         _mostrarBarraCarregamento();
-        await reqAlterarProcedimento(procedimentoAgendaMedica, context);
+        await procedimentoReq.reqAlterarProcedimento(procedimentoAgendaMedica, context);
         _mostrarBarraCarregamento();
       }
     }
@@ -198,7 +204,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
         agendamedica.dtInc = agendasMedicas.first.dtInc;
         agendamedica.dtAlt = DateTime.now().toString();
         _mostrarBarraCarregamento();
-        await reqAlterarAgendaMedica(agendamedica, context);
+        await agendaMedicaReq.reqAlterarAgendaMedica(agendamedica, context);
         _mostrarBarraCarregamento();
       }
     }
@@ -220,7 +226,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarEspecialidade(context);
+                  final res = await especialidadeReq.reqListarEspecialidade(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -267,7 +273,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarEspecializacao(context);
+                  final res = await especializacaoReq.reqListarEspecializacao(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -430,10 +436,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
                                           onTap: () => !widget.isCanceladoFinalizado && isModoInclusaoProcedimento ? incluirProcedimento() : null,
                                           child: Ink(
                                             decoration: BoxDecoration(
-                                              color:
-                                                  !widget.isCanceladoFinalizado && isModoInclusaoProcedimento
-                                                      ? theme.colorScheme.secondary
-                                                      : Colors.grey,
+                                              color: !widget.isCanceladoFinalizado && isModoInclusaoProcedimento ? theme.colorScheme.secondary : Colors.grey,
                                               borderRadius: BorderRadius.circular(4),
                                             ),
                                             child: Icon(Icons.note_add, color: theme.colorScheme.onSecondary),
@@ -446,10 +449,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
                                           onTap: () => !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? alterarProcedimento() : null,
                                           child: Ink(
                                             decoration: BoxDecoration(
-                                              color:
-                                                  !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento
-                                                      ? theme.colorScheme.tertiary
-                                                      : Colors.grey,
+                                              color: !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? theme.colorScheme.tertiary : Colors.grey,
                                               borderRadius: BorderRadius.circular(4),
                                             ),
                                             child: Icon(Icons.edit_document, color: theme.colorScheme.onTertiary),
@@ -501,8 +501,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
                                   ),
                                   if (Responsive.isLargeScreen(context))
                                     Button(
-                                      buttonColor:
-                                          !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? theme.colorScheme.tertiary : Colors.grey,
+                                      buttonColor: !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? theme.colorScheme.tertiary : Colors.grey,
                                       onPressed: () => !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? alterarAgendaMedica() : null,
                                       contentColor: theme.colorScheme.onTertiary,
                                       text: 'Atualizar',
@@ -514,8 +513,7 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Button(
-                                      buttonColor:
-                                          !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? theme.colorScheme.tertiary : Colors.grey,
+                                      buttonColor: !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? theme.colorScheme.tertiary : Colors.grey,
                                       onPressed: () => !widget.isCanceladoFinalizado && !isModoInclusaoProcedimento ? alterarAgendaMedica() : null,
                                       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                       contentColor: theme.colorScheme.onTertiary,
@@ -577,11 +575,11 @@ class _AgendaMedicaTabState extends State<AgendaMedicaTab> with TickerProviderSt
   }
 
   Future<void> _carregarDados() async {
-    var resAgendaMedica = await reqListarAgendaMedica(widget.idAtendimentoCRA, context);
+    var resAgendaMedica = await agendaMedicaReq.reqListarAgendaMedica(widget.idAtendimentoCRA, context);
     if (!mounted) return;
     setState(() => agendasMedicas = resAgendaMedica);
     if (agendasMedicas.isNotEmpty) {
-      var resProcedimento = await reqListarProcedimento(agendasMedicas.first.id ?? '', context);
+      var resProcedimento = await procedimentoReq.reqListarProcedimento(agendasMedicas.first.id ?? '', context);
       if (!mounted) return;
       setState(() => procedimentos = resProcedimento);
     } else {

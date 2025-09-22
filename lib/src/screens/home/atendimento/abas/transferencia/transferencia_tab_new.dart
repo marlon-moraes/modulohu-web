@@ -18,18 +18,18 @@ import 'package:modulohu_web/src/screens/home/atendimento/abas/atendimento/abas/
 import 'package:modulohu_web/src/screens/home/atendimento/abas/transferencia/dialog/dialog_cadastro_transferencia.dart';
 import 'package:modulohu_web/src/screens/home/dialog/dialog_listagem.dart';
 import 'package:modulohu_web/src/services/api/req/beneficiario_req.dart';
+import 'package:modulohu_web/src/services/api/req/cobertura_contratual_req.dart';
+import 'package:modulohu_web/src/services/api/req/convenio_req.dart';
+import 'package:modulohu_web/src/services/api/req/equipe_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/meio_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_nao_atendida_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_rejeitado_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_req.dart';
 import 'package:modulohu_web/src/services/api/req/pessoa_cadastro_req.dart';
+import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
 import 'package:modulohu_web/src/services/api/req/responsavel_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_cobertura_contratual_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_convenio_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_equipe_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_meio_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_nao_atendida_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_rejeitado_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_precaucao_req.dart';
+import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
 import 'package:modulohu_web/src/services/api/req/transferencia_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_tipo_internacao_req.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 class TransferenciaTabNew extends StatefulWidget {
@@ -114,6 +114,19 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
   var barraCarregamento = false;
   var funcionarioResponsavel = Responsavel();
   var convenioSelecionada = CadastrosTransferenciaRes();
+  BeneficiarioReq beneficiarioReq = BeneficiarioReq();
+  PessoaCadastroReq pessoaCadastroReq = PessoaCadastroReq();
+  ResponsavelReq responsavelReq = ResponsavelReq();
+  CoberturaContratualReq coberturaContratualReq = CoberturaContratualReq();
+  ConvenioReq convenioReq = ConvenioReq();
+  EquipeTransporteReq equipeTransporteReq = EquipeTransporteReq();
+  MeioTransporteReq meioTransporteReq = MeioTransporteReq();
+  MotivoNaoAtendidaReq motivoNaoAtendidaReq = MotivoNaoAtendidaReq();
+  MotivoRejeitadoReq motivoRejeitadoReq = MotivoRejeitadoReq();
+  MotivoReq motivoReq = MotivoReq();
+  PrecaucaoReq precaucaoReq = PrecaucaoReq();
+  TransferenciaReq transferenciaReq = TransferenciaReq();
+  TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +185,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarResponsavel(context);
+                  final res = await responsavelReq.reqListarResponsavel(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -211,11 +224,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
     }
 
     Widget dtNascimento() {
-      return FormTextField(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-        controller: dtNascimentoController,
-        text: 'Data de Nascimento',
-      );
+      return FormTextField(margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), controller: dtNascimentoController, text: 'Data de Nascimento');
     }
 
     Widget sexo() {
@@ -265,7 +274,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarPrecaucao(context);
+                  final res = await precaucaoReq.reqListarPrecaucao(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -313,7 +322,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarConvenio(context);
+                  final res = await convenioReq.reqListarConvenio(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -408,7 +417,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado && !(_coberturaContratualValue ?? true)) {
-                  final res = await reqListarCoberturaContratual(context);
+                  final res = await coberturaContratualReq.reqListarCoberturaContratual(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -724,7 +733,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado && !(_aprovacaolValue ?? true)) {
-                  final res = await reqListarMotivoRejeitado(context);
+                  final res = await motivoRejeitadoReq.reqListarMotivoRejeitado(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -800,7 +809,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarMotivo(context);
+                  final res = await motivoReq.reqListarMotivo(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -839,7 +848,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarTipoInternacao(context);
+                  final res = await tipoInternacaoReq.reqListarTipoInternacao(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -921,7 +930,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado && !(_solicitacaoAtendidaValue ?? true)) {
-                  final res = await reqListarMotivoNaoAtendida(context);
+                  final res = await motivoNaoAtendidaReq.reqListarMotivoNaoAtendida(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -990,7 +999,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarMeioTransporte(context);
+                  final res = await meioTransporteReq.reqListarMeioTransporte(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -1034,7 +1043,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: InkWell(
               onTap: () async {
                 if (!widget.isCanceladoFinalizado) {
-                  final res = await reqListarEquipeTransporte(context);
+                  final res = await equipeTransporteReq.reqListarEquipeTransporte(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -1166,7 +1175,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
           transferencia.dtSaida = dateFormatter2('${dataController.text} ${horaSaidaController.text}:00', true);
         }
         transferencia.idUsuAlt = IdAtendimentoCRA(id: widget.pessoaLogada.usuario?.id);
-        var res = await reqIncluirTransferencia(transferencia, context);
+        var res = await transferenciaReq.reqIncluirTransferencia(transferencia, context);
         _mostrarBarraCarregamento();
         if (res) {
           // await _sharedPref.remove('responsavel');
@@ -1231,10 +1240,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
                       Expanded(child: SizedBox()),
                     ],
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Expanded(child: familiarResponsavel()), Expanded(child: contatoFamiliar())],
-                  ),
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [Expanded(child: familiarResponsavel()), Expanded(child: contatoFamiliar())]),
                   Row(crossAxisAlignment: CrossAxisAlignment.center, children: [Expanded(child: instituicaoOrigem()), Expanded(child: leito())]),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1252,10 +1258,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
                           decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(4)),
                           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                           padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [Text('Leito Disponível: '), Expanded(child: leitoDisponivel())],
-                          ),
+                          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [Text('Leito Disponível: '), Expanded(child: leitoDisponivel())]),
                         ),
                       ),
                       Expanded(child: motivoTransferencia()),
@@ -1286,10 +1289,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
                         decoration: BoxDecoration(border: Border.all(color: theme.colorScheme.primary), borderRadius: BorderRadius.circular(4)),
                         margin: EdgeInsets.fromLTRB(8, 10, 8, 8),
                         padding: EdgeInsets.only(top: 4),
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          child: Column(children: [SizedBox(height: 5), dadosClinicosAnotacoes()]),
-                        ),
+                        child: Container(margin: EdgeInsets.symmetric(vertical: 5), child: Column(children: [SizedBox(height: 5), dadosClinicosAnotacoes()])),
                       ),
                       Container(
                         decoration: BoxDecoration(color: theme.canvasColor),
@@ -1421,10 +1421,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
                         decoration: BoxDecoration(border: Border.all(color: theme.colorScheme.primary), borderRadius: BorderRadius.circular(4)),
                         margin: EdgeInsets.fromLTRB(8, 10, 8, 8),
                         padding: EdgeInsets.only(top: 4),
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          child: Column(children: [SizedBox(height: 5), dadosClinicosAnotacoes()]),
-                        ),
+                        child: Container(margin: EdgeInsets.symmetric(vertical: 5), child: Column(children: [SizedBox(height: 5), dadosClinicosAnotacoes()])),
                       ),
                       Container(
                         decoration: BoxDecoration(color: theme.canvasColor),
@@ -1567,17 +1564,23 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
   Future<void> _carregarDados() async {
     dtSolicitacaoController.text = dateFormatter(widget.atendimentoCarregado.dtSolicitacao ?? '');
     nomeResponsavelController.text = widget.pessoaLogada.usuario?.nome ?? '';
-    final resFuncionario = await reqListarResponsavel(context);
+    final resFuncionario = await responsavelReq.reqListarResponsavel(context);
     for (var element in resFuncionario) {
       // if (element.nome == widget.pessoaLogada.usuario?.nome) funcionarioResponsavel = element;
       await _sharedPref.save('responsavel', jsonEncode(element));
       break;
     }
     if (!mounted) return;
-    final resPessoa = await reqListarBeneficiario(widget.beneficiarioCarteirinha, widget.beneficiarioNome, widget.beneficiarioCnp, true, context);
+    final resPessoa = await beneficiarioReq.reqListarBeneficiario(
+      widget.beneficiarioCarteirinha,
+      widget.beneficiarioNome,
+      widget.beneficiarioCnp,
+      true,
+      context,
+    );
     if (!mounted) return;
     if (resPessoa.isNotEmpty) {
-      final resTelefone = await reqCarregarTelefonePessoa(resPessoa.first.pessoa?.autoId.toString() ?? '', context);
+      final resTelefone = await pessoaCadastroReq.reqCarregarTelefonePessoa(resPessoa.first.pessoa?.autoId.toString() ?? '', context);
       if (!mounted) return;
       nomePacienteController.text = resPessoa.first.pessoa?.nome ?? '';
       dtNascimentoController.text = dateFormatter(resPessoa.first.pessoa?.dtNascimento ?? '');
@@ -1595,7 +1598,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
                 ? 'PRIVATIVO'
                 : null;
       });
-      final res = await reqListarConvenio(context);
+      final res = await convenioReq.reqListarConvenio(context);
       for (var element in res) {
         if (element.nome?.toLowerCase() == 'unimed vd') {
           await _sharedPref.save('convenio', jsonEncode(element));

@@ -17,32 +17,34 @@ import 'package:modulohu_web/src/services/router/api_routes.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
 
-Map<String, String> get _defaultHeaders => {
-  'accept': '*/*',
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Credentials': 'true',
-  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
-};
-
-Future<List<Responsavel>> reqListarResponsavel(BuildContext context) async {
-  Map<String, dynamic> json = {
-    'usuarioSC': {'ativo': 1},
+class ResponsavelReq {
+  Map<String, String> get _defaultHeaders => {
+    'accept': '*/*',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
   };
-  http.Response? response = await Requisition(ApiRoutes.listarResponsavel).req(HttpRequests.POST, json, context, header: _defaultHeaders);
-  if (response != null) {
-    try {
-      final body = jsonDecode(utf8.decode(response.bodyBytes));
-      if (body['sucesso']) {
-        return (body['usuarios'] as List).map((e) => Responsavel.fromJson(e)).toList();
-      } else {
-        showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(body['mensagem'])));
+
+  Future<List<Responsavel>> reqListarResponsavel(BuildContext context) async {
+    Map<String, dynamic> json = {
+      'usuarioSC': {'ativo': 1},
+    };
+    http.Response? response = await Requisition(ApiRoutes.listarResponsavel).req(HttpRequests.POST, json, context, header: _defaultHeaders);
+    if (response != null) {
+      try {
+        final body = jsonDecode(utf8.decode(response.bodyBytes));
+        if (body['sucesso']) {
+          return (body['usuarios'] as List).map((e) => Responsavel.fromJson(e)).toList();
+        } else {
+          showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(body['mensagem'])));
+        }
+      } on ApiException catch (e) {
+        showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(e.message)));
+      } catch (e) {
+        Message(e.toString(), false).inputMsg(context);
       }
-    } on ApiException catch (e) {
-      showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(e.message)));
-    } catch (e) {
-      Message(e.toString(), false).inputMsg(context);
     }
+    return [];
   }
-  return [];
 }

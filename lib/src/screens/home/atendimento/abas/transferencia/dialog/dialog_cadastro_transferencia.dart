@@ -11,16 +11,16 @@ import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/atendimento/abas/transferencia/dialog/dialog_edicao_cadastro_transferencia.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_cobertura_contratual_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_convenio_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_equipe_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_meio_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_nao_atendida_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_rejeitado_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_solicitacao_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_precaucao_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_tipo_internacao_req.dart';
+import 'package:modulohu_web/src/services/api/req/cobertura_contratual_req.dart';
+import 'package:modulohu_web/src/services/api/req/convenio_req.dart';
+import 'package:modulohu_web/src/services/api/req/equipe_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/meio_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_nao_atendida_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_rejeitado_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_solicitacao_req.dart';
+import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
+import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 class DialogCadastroTransferencia extends StatefulWidget {
@@ -47,6 +47,16 @@ class ListDataSource extends DataTableSource {
   ListDataSource(this.title, this._list, this.pessoaLogada, this.atualizarListagem, this.size, this.nome, this.context);
 
   final _sharedPref = SharedPref();
+  CoberturaContratualReq coberturaContratualReq = CoberturaContratualReq();
+  ConvenioReq convenioReq = ConvenioReq();
+  EquipeTransporteReq equipeTransporteReq = EquipeTransporteReq();
+  MeioTransporteReq meioTransporteReq = MeioTransporteReq();
+  MotivoNaoAtendidaReq motivoNaoAtendidaReq = MotivoNaoAtendidaReq();
+  MotivoRejeitadoReq motivoRejeitadoReq = MotivoRejeitadoReq();
+  MotivoReq motivoReq = MotivoReq();
+  MotivoSolicitacaoReq motivoSolicitacaoReq = MotivoSolicitacaoReq();
+  PrecaucaoReq precaucaoReq = PrecaucaoReq();
+  TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
 
   @override
   bool get isRowCountApproximate => false;
@@ -89,34 +99,34 @@ class ListDataSource extends DataTableSource {
                   },
                 );
                 if (title == 'Cobertura Contratual') {
-                  final res = await reqListarCoberturaContratual(context);
+                  final res = await coberturaContratualReq.reqListarCoberturaContratual(context);
                   atualizarListagem(res);
                 } else if (title == 'Convênio') {
-                  final res = await reqListarConvenio(context);
+                  final res = await convenioReq.reqListarConvenio(context);
                   atualizarListagem(res);
                 } else if (title == 'Equipe de Transporte') {
-                  final res = await reqListarEquipeTransporte(context);
+                  final res = await equipeTransporteReq.reqListarEquipeTransporte(context);
                   atualizarListagem(res);
                 } else if (title == 'Meio de Transporte') {
-                  final res = await reqListarMeioTransporte(context);
+                  final res = await meioTransporteReq.reqListarMeioTransporte(context);
                   atualizarListagem(res);
                 } else if (title == 'Motivo') {
-                  final res = await reqListarMotivo(context);
+                  final res = await motivoReq.reqListarMotivo(context);
                   atualizarListagem(res);
                 } else if (title == 'Motivo não Atendida') {
-                  final res = await reqListarMotivoNaoAtendida(context);
+                  final res = await motivoNaoAtendidaReq.reqListarMotivoNaoAtendida(context);
                   atualizarListagem(res);
                 } else if (title == 'Motivo Rejeitado') {
-                  final res = await reqListarMotivoRejeitado(context);
+                  final res = await motivoRejeitadoReq.reqListarMotivoRejeitado(context);
                   atualizarListagem(res);
                 } else if (title == 'Motivo Solicitação') {
-                  final res = await reqListarMotivoSolicitacao(context);
+                  final res = await motivoSolicitacaoReq.reqListarMotivoSolicitacao(context);
                   atualizarListagem(res);
                 } else if (title == 'Precaução') {
-                  final res = await reqListarPrecaucao(context);
+                  final res = await precaucaoReq.reqListarPrecaucao(context);
                   atualizarListagem(res);
                 } else if (title == 'Tipo de Internação') {
-                  final res = await reqListarTipoInternacao(context);
+                  final res = await tipoInternacaoReq.reqListarTipoInternacao(context);
                   atualizarListagem(res);
                 }
               },
@@ -159,6 +169,16 @@ class _DialogCadastroTransferenciaState extends State<DialogCadastroTransferenci
   final scrollController = ScrollController();
   final searchController = TextEditingController();
   List<CadastrosTransferenciaRes> filteredList = [];
+  CoberturaContratualReq coberturaContratualReq = CoberturaContratualReq();
+  ConvenioReq convenioReq = ConvenioReq();
+  EquipeTransporteReq equipeTransporteReq = EquipeTransporteReq();
+  MeioTransporteReq meioTransporteReq = MeioTransporteReq();
+  MotivoNaoAtendidaReq motivoNaoAtendidaReq = MotivoNaoAtendidaReq();
+  MotivoRejeitadoReq motivoRejeitadoReq = MotivoRejeitadoReq();
+  MotivoReq motivoReq = MotivoReq();
+  MotivoSolicitacaoReq motivoSolicitacaoReq = MotivoSolicitacaoReq();
+  PrecaucaoReq precaucaoReq = PrecaucaoReq();
+  TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -193,9 +213,7 @@ class _DialogCadastroTransferenciaState extends State<DialogCadastroTransferenci
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: '')),
-                    ],
+                    children: [Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: ''))],
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -217,34 +235,34 @@ class _DialogCadastroTransferenciaState extends State<DialogCadastroTransferenci
                               },
                             );
                             if (widget.title == 'Cobertura Contratual') {
-                              final res = await reqListarCoberturaContratual(context);
+                              final res = await coberturaContratualReq.reqListarCoberturaContratual(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Convênio') {
-                              final res = await reqListarConvenio(context);
+                              final res = await convenioReq.reqListarConvenio(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Equipe de Transporte') {
-                              final res = await reqListarEquipeTransporte(context);
+                              final res = await equipeTransporteReq.reqListarEquipeTransporte(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Meio de Transporte') {
-                              final res = await reqListarMeioTransporte(context);
+                              final res = await meioTransporteReq.reqListarMeioTransporte(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Motivo') {
-                              final res = await reqListarMotivo(context);
+                              final res = await motivoReq.reqListarMotivo(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Motivo não Atendida') {
-                              final res = await reqListarMotivoNaoAtendida(context);
+                              final res = await motivoNaoAtendidaReq.reqListarMotivoNaoAtendida(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Motivo Rejeitado') {
-                              final res = await reqListarMotivoRejeitado(context);
+                              final res = await motivoRejeitadoReq.reqListarMotivoRejeitado(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Motivo Solicitação') {
-                              final res = await reqListarMotivoSolicitacao(context);
+                              final res = await motivoSolicitacaoReq.reqListarMotivoSolicitacao(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Precaução') {
-                              final res = await reqListarPrecaucao(context);
+                              final res = await precaucaoReq.reqListarPrecaucao(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Tipo de Internação') {
-                              final res = await reqListarTipoInternacao(context);
+                              final res = await tipoInternacaoReq.reqListarTipoInternacao(context);
                               setState(() => filteredList = res);
                             }
                           },

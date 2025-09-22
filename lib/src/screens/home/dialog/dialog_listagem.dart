@@ -179,6 +179,10 @@ class _DialogListagemState extends State<DialogListagem> {
   var _ativoValue = true;
   var _cardioValue = true;
   var cardio = true;
+  BeneficiarioReq beneficiarioReq = BeneficiarioReq();
+  MedicoSolicitanteReq medicoSolicitanteReq = MedicoSolicitanteReq();
+  PessoaCadastroReq pessoaCadastroReq = PessoaCadastroReq();
+  ProcedimentosReq reqListarProcedimentos = ProcedimentosReq();
 
   @override
   Widget build(BuildContext context) {
@@ -188,26 +192,32 @@ class _DialogListagemState extends State<DialogListagem> {
     Future<void> consultar() async {
       _mostrarBarraCarregamento();
       if (widget.title == 'Médico Solicitante') {
-        final res = await reqListarMedicoSolicitante(nomeController.text, cpfController.text, context);
+        final res = await medicoSolicitanteReq.reqListarMedicoSolicitante(nomeController.text, cpfController.text, context);
         setState(() => filteredList = res);
       } else if (widget.title == 'Beneficiário') {
-        final res = await reqListarBeneficiario(null, nomeController.text, cpfController.text.replaceAll(RegExp(r'[.\-]'), ''), _ativoValue, context);
+        final res = await beneficiarioReq.reqListarBeneficiario(
+          null,
+          nomeController.text,
+          cpfController.text.replaceAll(RegExp(r'[.\-]'), ''),
+          _ativoValue,
+          context,
+        );
         setState(() => filteredList = res);
       } else if (widget.title == 'Instituição de Origem' ||
           widget.title == 'Instituição de Referência' ||
           widget.title == 'Médico Solicitante ' ||
           widget.title == 'Médico que irá Receber o Paciente') {
         if (_cardioValue) {
-          final res = await reqListarMedicoSolicitante(nomeController.text, cpfController.text, context);
+          final res = await medicoSolicitanteReq.reqListarMedicoSolicitante(nomeController.text, cpfController.text, context);
           cardio = true;
           setState(() => filteredList = res);
         } else {
-          final res = await reqListarPessoa(nomeController.text, cpfController.text, true, context);
+          final res = await pessoaCadastroReq.reqListarPessoa(nomeController.text, cpfController.text, true, context);
           cardio = false;
           setState(() => filteredList = res);
         }
       } else {
-        final res = await reqListarProcedimentos(nomeController.text, context);
+        final res = await reqListarProcedimentos.reqListarProcedimentos(nomeController.text, context);
         setState(() => filteredList = res);
       }
       nomeController.clear();
@@ -328,9 +338,7 @@ class _DialogListagemState extends State<DialogListagem> {
                       widget.title != 'Médico que irá Receber o Paciente')
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: '')),
-                      ],
+                      children: [Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: ''))],
                     ),
                   if (widget.title == 'Beneficiário' ||
                       widget.title == 'Instituição de Origem' ||

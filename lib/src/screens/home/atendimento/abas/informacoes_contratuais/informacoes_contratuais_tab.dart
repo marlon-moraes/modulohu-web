@@ -176,6 +176,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   var iniVigContratoController = TextEditingController();
   var iniVigBeneficiarioController = TextEditingController();
   var dataBaseCoberturaController = TextEditingController();
+  ContratoReq contratoReq = ContratoReq();
 
   Widget codContrato() {
     return FormTextField(
@@ -196,12 +197,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   }
 
   Widget status() {
-    return FormTextField(
-      controller: statusController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'Status',
-      enabled: false,
-    );
+    return FormTextField(controller: statusController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'Status', enabled: false);
   }
 
   Widget linha() {
@@ -218,21 +214,11 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   }
 
   Widget nomeConta() {
-    return FormTextField(
-      controller: nomeContaController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'Nome Conta',
-      enabled: false,
-    );
+    return FormTextField(controller: nomeContaController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'Nome Conta', enabled: false);
   }
 
   Widget cpfCnpj() {
-    return FormTextField(
-      controller: cpfCnpjController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'CPF/CNPJ',
-      enabled: false,
-    );
+    return FormTextField(controller: cpfCnpjController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'CPF/CNPJ', enabled: false);
   }
 
   Widget abrangencia() {
@@ -254,21 +240,11 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   }
 
   Widget nomeModulo() {
-    return FormTextField(
-      controller: nomeModuloController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'Nome Módulo',
-      enabled: false,
-    );
+    return FormTextField(controller: nomeModuloController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'Nome Módulo', enabled: false);
   }
 
   Widget nomePlano() {
-    return FormTextField(
-      controller: nomePlanoController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'Nome Plano',
-      enabled: false,
-    );
+    return FormTextField(controller: nomePlanoController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'Nome Plano', enabled: false);
   }
 
   Widget modeloContrato() {
@@ -290,12 +266,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   }
 
   Widget codPlano() {
-    return FormTextField(
-      controller: codPlanoController,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      text: 'Código Plano',
-      enabled: false,
-    );
+    return FormTextField(controller: codPlanoController, margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5), text: 'Código Plano', enabled: false);
   }
 
   @override
@@ -549,13 +520,13 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   }
 
   Future<void> _carregarDados() async {
-    var resInfoContrato = await reqListarInformacoesContrato(widget.contrato, context);
+    var resInfoContrato = await contratoReq.reqListarInformacoesContrato(widget.contrato, context);
     if (!mounted) return;
     setState(() => _contrato = resInfoContrato);
-    var resInfoCoberturas = await reqListarCoberturas(int.parse(widget.contrato), int.parse(widget.carteirinha), context);
+    var resInfoCoberturas = await contratoReq.reqListarCoberturas(int.parse(widget.contrato), int.parse(widget.carteirinha), context);
     if (!mounted) return;
     setState(() => _coberturas = resInfoCoberturas);
-    var resInfoModulosBeneficiarios = await reqListarModulosBeneficiario(widget.carteirinha, context);
+    var resInfoModulosBeneficiarios = await contratoReq.reqListarModulosBeneficiario(widget.carteirinha, context);
     if (!mounted) return;
     setState(() => _modulosBeneficiario = resInfoModulosBeneficiarios);
     setState(() {

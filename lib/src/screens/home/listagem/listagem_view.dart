@@ -15,7 +15,7 @@ import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/listagem/listagem_widget.dart';
 import 'package:modulohu_web/src/screens/home/side_menu.dart';
-import 'package:modulohu_web/src/utils/enum_telas.dart';
+import 'package:modulohu_web/src/utils/constants.dart';
 import 'package:modulohu_web/src/utils/login_validation.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
 

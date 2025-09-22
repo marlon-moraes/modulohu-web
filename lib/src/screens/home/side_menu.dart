@@ -16,7 +16,7 @@ import 'package:modulohu_web/src/services/api/req/canal_req.dart';
 import 'package:modulohu_web/src/services/api/req/carater_atendimento_req.dart';
 import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
-import 'package:modulohu_web/src/utils/enum_telas.dart';
+import 'package:modulohu_web/src/utils/constants.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 class SideMenu extends StatefulWidget {
@@ -32,6 +32,11 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   final _sharedPref = SharedPref();
   var expanded = false;
+  AssuntoReq assuntoReq = AssuntoReq();
+  CanalReq canalReq = CanalReq();
+  CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -115,15 +120,11 @@ class _SideMenuState extends State<SideMenu> {
                   leading: FaIcon(FontAwesomeIcons.solidFile, color: theme.colorScheme.primary),
                   title: Text(
                     'Tipo de Atendimento',
-                    style: TextStyle(
-                      fontSize: theme.textTheme.bodyLarge!.fontSize,
-                      color: theme.colorScheme.primary,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: TextStyle(fontSize: theme.textTheme.bodyLarge!.fontSize, color: theme.colorScheme.primary, overflow: TextOverflow.ellipsis),
                     maxLines: 3,
                   ),
                   onTap: () async {
-                    final res = await reqListarTipoAtendimento(context);
+                    final res = await tipoAtendimentoReq.reqListarTipoAtendimento(context);
                     showDialog(
                       context: context,
                       builder: (context) => DialogCadastro(title: 'Tipo de Atendimento', list: res, pessoaLogada: widget.pessoaLogada),
@@ -137,19 +138,12 @@ class _SideMenuState extends State<SideMenu> {
                   leading: FaIcon(FontAwesomeIcons.solidFile, color: theme.colorScheme.primary),
                   title: Text(
                     'Assunto',
-                    style: TextStyle(
-                      fontSize: theme.textTheme.bodyLarge!.fontSize,
-                      color: theme.colorScheme.primary,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: TextStyle(fontSize: theme.textTheme.bodyLarge!.fontSize, color: theme.colorScheme.primary, overflow: TextOverflow.ellipsis),
                     maxLines: 3,
                   ),
                   onTap: () async {
-                    final res = await reqListarAssunto(context);
-                    showDialog(
-                      context: context,
-                      builder: (context) => DialogCadastro(title: 'Assunto', list: res, pessoaLogada: widget.pessoaLogada),
-                    );
+                    final res = await assuntoReq.reqListarAssunto(context);
+                    showDialog(context: context, builder: (context) => DialogCadastro(title: 'Assunto', list: res, pessoaLogada: widget.pessoaLogada));
                   },
                 ),
               ),
@@ -159,15 +153,11 @@ class _SideMenuState extends State<SideMenu> {
                   leading: FaIcon(FontAwesomeIcons.solidFile, color: theme.colorScheme.primary),
                   title: Text(
                     'Canal',
-                    style: TextStyle(
-                      fontSize: theme.textTheme.bodyLarge!.fontSize,
-                      color: theme.colorScheme.primary,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: TextStyle(fontSize: theme.textTheme.bodyLarge!.fontSize, color: theme.colorScheme.primary, overflow: TextOverflow.ellipsis),
                     maxLines: 3,
                   ),
                   onTap: () async {
-                    final res = await reqListarCanal(context);
+                    final res = await canalReq.reqListarCanal(context);
                     showDialog(context: context, builder: (context) => DialogCadastro(title: 'Canal', list: res, pessoaLogada: widget.pessoaLogada));
                   },
                 ),
@@ -178,15 +168,11 @@ class _SideMenuState extends State<SideMenu> {
                   leading: FaIcon(FontAwesomeIcons.solidFile, color: theme.colorScheme.primary),
                   title: Text(
                     'Caráter de Atendimento',
-                    style: TextStyle(
-                      fontSize: theme.textTheme.bodyLarge!.fontSize,
-                      color: theme.colorScheme.primary,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: TextStyle(fontSize: theme.textTheme.bodyLarge!.fontSize, color: theme.colorScheme.primary, overflow: TextOverflow.ellipsis),
                     maxLines: 3,
                   ),
                   onTap: () async {
-                    final res = await reqListarCaraterAtendimento(context);
+                    final res = await caraterAtendimentoReq.reqListarCaraterAtendimento(context);
                     showDialog(
                       context: context,
                       builder: (context) => DialogCadastro(title: 'Caráter de Atendimento', list: res, pessoaLogada: widget.pessoaLogada),
@@ -200,15 +186,11 @@ class _SideMenuState extends State<SideMenu> {
                   leading: FaIcon(FontAwesomeIcons.solidFile, color: theme.colorScheme.primary),
                   title: Text(
                     'Status',
-                    style: TextStyle(
-                      fontSize: theme.textTheme.bodyLarge!.fontSize,
-                      color: theme.colorScheme.primary,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    style: TextStyle(fontSize: theme.textTheme.bodyLarge!.fontSize, color: theme.colorScheme.primary, overflow: TextOverflow.ellipsis),
                     maxLines: 3,
                   ),
                   onTap: () async {
-                    final res = await reqListarStatus(true, false, context);
+                    final res = await statusReq.reqListarStatus(true, false, context);
                     showDialog(context: context, builder: (context) => DialogCadastro(title: 'Status', list: res, pessoaLogada: widget.pessoaLogada));
                   },
                 ),

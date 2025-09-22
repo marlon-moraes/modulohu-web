@@ -47,6 +47,8 @@ class AnexosDataSource extends DataTableSource {
 
   AnexosDataSource(this._list, this.arquivo, this.descricao, this.idAnexo, this.size, this.alterarModo, this.context);
 
+  AnexoReq anexoReq = AnexoReq();
+
   @override
   bool get isRowCountApproximate => false;
 
@@ -108,7 +110,7 @@ class AnexosDataSource extends DataTableSource {
             message: 'Carregar Anexo',
             child: SizedBox(
               width: Responsive.isLargeScreen(context) ? size.width * 0.05 : null,
-              child: IconButton(onPressed: () => reqCarregarAnexo(item.id ?? '', context), icon: Icon(Icons.open_in_browser_rounded)),
+              child: IconButton(onPressed: () => anexoReq.reqCarregarAnexo(item.id ?? '', context), icon: Icon(Icons.open_in_browser_rounded)),
             ),
           ),
         ),
@@ -135,6 +137,7 @@ class _AnexosTabState extends State<AnexosTab> {
   var barraCarregamento = false;
   var _anexos = <Anexo>[];
   var anexo = CRUDAnexo(anexoAtdCRABody: Anexo());
+  AnexoReq anexoReq = AnexoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +170,7 @@ class _AnexosTabState extends State<AnexosTab> {
         anexo.anexoAtdCRABody?.idImagem = 0;
         anexo.anexoAtdCRABody?.idUsuInc = widget.pessoaLogada.usuario?.id;
         anexo.anexoAtdCRABody?.idUsuAlt = widget.pessoaLogada.usuario?.id;
-        await reqIncluirAnexo(anexo, context);
+        await anexoReq.reqIncluirAnexo(anexo, context);
         _recarregarAnexos();
         _limparCampos();
         _mostrarBarraCarregamento();
@@ -177,7 +180,7 @@ class _AnexosTabState extends State<AnexosTab> {
     Future<void> excluirAnexo() async {
       if (!barraCarregamento) {
         _mostrarBarraCarregamento();
-        await reqExcluirAnexo(idAnexoController.text, widget.pessoaLogada.usuario?.id ?? '', context);
+        await anexoReq.reqExcluirAnexo(idAnexoController.text, widget.pessoaLogada.usuario?.id ?? '', context);
         _recarregarAnexos();
         _limparCampos();
         _mostrarBarraCarregamento();
@@ -217,12 +220,7 @@ class _AnexosTabState extends State<AnexosTab> {
 
     Widget descricao() {
       return Expanded(
-        child: FormTextField(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          controller: descricaoController,
-          text: 'Descrição',
-          enabled: true,
-        ),
+        child: FormTextField(margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), controller: descricaoController, text: 'Descrição', enabled: true),
       );
     }
 
@@ -266,8 +264,7 @@ class _AnexosTabState extends State<AnexosTab> {
           child: Column(
             children: [
               SizedBox(height: 2),
-              if (Responsive.isLargeScreen(context))
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [arquivo(), descricao(), usuario()]),
+              if (Responsive.isLargeScreen(context)) Row(crossAxisAlignment: CrossAxisAlignment.center, children: [arquivo(), descricao(), usuario()]),
               if (!Responsive.isLargeScreen(context))
                 Column(
                   children: [
@@ -352,7 +349,7 @@ class _AnexosTabState extends State<AnexosTab> {
 
   Future<void> _carregarAnexos() async {
     if (widget.atendimentoCarregado.id != null) {
-      var res = await reqListarAnexo(widget.atendimentoCarregado.id ?? '', context);
+      var res = await anexoReq.reqListarAnexo(widget.atendimentoCarregado.id ?? '', context);
       if (mounted) setState(() => _anexos = res);
     }
   }
@@ -362,7 +359,7 @@ class _AnexosTabState extends State<AnexosTab> {
   }
 
   Future<void> _recarregarAnexos() async {
-    var resAnexos = await reqListarAnexo(widget.atendimentoCarregado.id ?? '', context);
+    var resAnexos = await anexoReq.reqListarAnexo(widget.atendimentoCarregado.id ?? '', context);
     if (mounted) setState(() => _anexos = resAnexos);
   }
 

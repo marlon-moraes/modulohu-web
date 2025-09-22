@@ -37,6 +37,12 @@ class ListDataSource extends DataTableSource {
 
   ListDataSource(this.title, this._list, this.pessoaLogada, this.atualizarListagem, this.size, this.context);
 
+  AssuntoReq assuntoReq = AssuntoReq();
+  CanalReq canalReq = CanalReq();
+  CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
+
   @override
   bool get isRowCountApproximate => false;
 
@@ -105,19 +111,19 @@ class ListDataSource extends DataTableSource {
           },
         );
         if (title == 'Tipo de Atendimento') {
-          final res = await reqListarTipoAtendimento(context);
+          final res = await tipoAtendimentoReq.reqListarTipoAtendimento(context);
           atualizarListagem(res);
         } else if (title == 'Assunto') {
-          final res = await reqListarAssunto(context);
+          final res = await assuntoReq.reqListarAssunto(context);
           atualizarListagem(res);
         } else if (title == 'Canal') {
-          final res = await reqListarCanal(context);
+          final res = await canalReq.reqListarCanal(context);
           atualizarListagem(res);
         } else if (title == 'Caráter de Atendimento') {
-          final res = await reqListarCaraterAtendimento(context);
+          final res = await caraterAtendimentoReq.reqListarCaraterAtendimento(context);
           atualizarListagem(res);
         } else if (title == 'Status') {
-          final res = await reqListarStatus(true, false, context);
+          final res = await statusReq.reqListarStatus(true, false, context);
           atualizarListagem(res);
         }
       },
@@ -129,6 +135,11 @@ class _DialogCadastroState extends State<DialogCadastro> {
   final scrollController = ScrollController();
   final searchController = TextEditingController();
   List<dynamic> filteredList = [];
+  AssuntoReq assuntoReq = AssuntoReq();
+  CanalReq canalReq = CanalReq();
+  CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -163,9 +174,7 @@ class _DialogCadastroState extends State<DialogCadastro> {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: '')),
-                    ],
+                    children: [Expanded(child: FormTextField(margin: const EdgeInsets.all(8), controller: searchController, icon: Icons.search, text: ''))],
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -192,19 +201,19 @@ class _DialogCadastroState extends State<DialogCadastro> {
                               },
                             );
                             if (widget.title == 'Tipo de Atendimento') {
-                              final res = await reqListarTipoAtendimento(context);
+                              final res = await tipoAtendimentoReq.reqListarTipoAtendimento(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Assunto') {
-                              final res = await reqListarAssunto(context);
+                              final res = await assuntoReq.reqListarAssunto(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Canal') {
-                              final res = await reqListarCanal(context);
+                              final res = await canalReq.reqListarCanal(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Caráter de Atendimento') {
-                              final res = await reqListarCaraterAtendimento(context);
+                              final res = await caraterAtendimentoReq.reqListarCaraterAtendimento(context);
                               setState(() => filteredList = res);
                             } else if (widget.title == 'Status') {
-                              final res = await reqListarStatus(true, false, context);
+                              final res = await statusReq.reqListarStatus(true, false, context);
                               setState(() => filteredList = res);
                             }
                           },

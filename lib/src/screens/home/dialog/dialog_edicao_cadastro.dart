@@ -35,6 +35,11 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
   bool? _ativoValue;
   bool? _fixoValue;
   var barraCarregamento = false;
+  AssuntoReq assuntoReq = AssuntoReq();
+  CanalReq canalReq = CanalReq();
+  CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -58,34 +63,34 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
           cadastro.idUsuAlt = widget.pessoaLogada.usuario?.id;
           if (widget.isModoInclusao) {
             if (widget.title == 'Tipo de Atendimento') {
-              await reqIncluirTipoAtendimento(cadastro, context);
+              await tipoAtendimentoReq.reqIncluirTipoAtendimento(cadastro, context);
             } else if (widget.title == 'Assunto') {
-              await reqIncluirAssunto(cadastro, context);
+              await assuntoReq.reqIncluirAssunto(cadastro, context);
             } else if (widget.title == 'Canal') {
-              await reqIncluirCanal(cadastro, context);
+              await canalReq.reqIncluirCanal(cadastro, context);
             } else if (widget.title == 'Caráter de Atendimento') {
-              await reqIncluirCaraterAtendimento(cadastro, context);
+              await caraterAtendimentoReq.reqIncluirCaraterAtendimento(cadastro, context);
             } else if (widget.title == 'Status') {
               cadastro.ativo = _ativoValue;
               cadastro.fixo = _fixoValue;
-              await reqIncluirStatus(cadastro, context);
+              await statusReq.reqIncluirStatus(cadastro, context);
             }
           } else {
             cadastro.id = widget.item.id;
             cadastro.dtInc = widget.item.dtInc;
             cadastro.dtAlt = widget.item.dtAlt;
             if (widget.title == 'Tipo de Atendimento') {
-              await reqAlterarTipoAtendimento(cadastro, context);
+              await tipoAtendimentoReq.reqAlterarTipoAtendimento(cadastro, context);
             } else if (widget.title == 'Assunto') {
-              await reqAlterarAssunto(cadastro, context);
+              await assuntoReq.reqAlterarAssunto(cadastro, context);
             } else if (widget.title == 'Canal') {
-              await reqAlterarCanal(cadastro, context);
+              await canalReq.reqAlterarCanal(cadastro, context);
             } else if (widget.title == 'Caráter de Atendimento') {
-              await reqAlterarCaraterAtendimento(cadastro, context);
+              await caraterAtendimentoReq.reqAlterarCaraterAtendimento(cadastro, context);
             } else if (widget.title == 'Status') {
               cadastro.ativo = _ativoValue;
               cadastro.fixo = _fixoValue;
-              await reqAlterarStatus(cadastro, context);
+              await statusReq.reqAlterarStatus(cadastro, context);
             }
           }
           _limparCampos();
@@ -125,15 +130,15 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
       );
       if (confirmation) {
         if (widget.title == 'Tipo de Atendimento') {
-          await reqExcluirTipoAtendimento(widget.item.id, context);
+          await tipoAtendimentoReq.reqExcluirTipoAtendimento(widget.item.id, context);
         } else if (widget.title == 'Assunto') {
-          await reqExcluirAssunto(widget.item.id, context);
+          await assuntoReq.reqExcluirAssunto(widget.item.id, context);
         } else if (widget.title == 'Canal') {
-          await reqExcluirCanal(widget.item.id, context);
+          await canalReq.reqExcluirCanal(widget.item.id, context);
         } else if (widget.title == 'Caráter de Atendimento') {
-          await reqExcluirCaraterAtendimento(widget.item.id, context);
+          await caraterAtendimentoReq.reqExcluirCaraterAtendimento(widget.item.id, context);
         } else if (widget.title == 'Status') {
-          await reqExcluirStatus(widget.item.id, context);
+          await statusReq.reqExcluirStatus(widget.item.id, context);
         }
       }
       _mostrarBarraCarregamento();
@@ -255,12 +260,9 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (widget.isModoInclusao)
-                      Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Incluir'),
-                    if (!widget.isModoInclusao)
-                      Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Alterar'),
-                    if (!widget.isModoInclusao)
-                      Button(onPressed: () => excluir(), buttonColor: Colors.red, margin: EdgeInsets.all(8), text: 'Excluir'),
+                    if (widget.isModoInclusao) Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Incluir'),
+                    if (!widget.isModoInclusao) Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Alterar'),
+                    if (!widget.isModoInclusao) Button(onPressed: () => excluir(), buttonColor: Colors.red, margin: EdgeInsets.all(8), text: 'Excluir'),
                     Button(onPressed: () => Navigator.of(context).pop(), buttonColor: Colors.blueAccent, margin: EdgeInsets.all(8), text: 'Fechar'),
                   ],
                 ),

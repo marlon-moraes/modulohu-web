@@ -19,6 +19,7 @@ class EventosTab extends StatefulWidget {
 class _EventosTabState extends State<EventosTab> {
   final scrollController = ScrollController();
   List<Evento> eventos = [];
+  EventoReq eventoReq = EventoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +107,7 @@ class _EventosTabState extends State<EventosTab> {
 
   Future<void> _carregarEventos() async {
     if (widget.atendimentoCarregado.id != null) {
-      var res = await reqListarEvento(widget.atendimentoCarregado.id ?? '', context);
+      var res = await eventoReq.reqListarEvento(widget.atendimentoCarregado.id ?? '', context);
       setState(() => eventos = res);
     }
   }

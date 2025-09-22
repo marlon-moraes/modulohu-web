@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/crud_cadastro.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_cobertura_contratual_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_convenio_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_equipe_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_meio_transporte_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_nao_atendida_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_rejeitado_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_motivo_solicitacao_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_precaucao_req.dart';
-import 'package:modulohu_web/src/services/api/req/transferencia_tipo_internacao_req.dart';
+import 'package:modulohu_web/src/services/api/req/cobertura_contratual_req.dart';
+import 'package:modulohu_web/src/services/api/req/convenio_req.dart';
+import 'package:modulohu_web/src/services/api/req/equipe_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/meio_transporte_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_nao_atendida_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_rejeitado_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_req.dart';
+import 'package:modulohu_web/src/services/api/req/motivo_solicitacao_req.dart';
+import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
+import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
 
 class DialogEdicaoCadastroTransferencia extends StatefulWidget {
   final String title;
@@ -36,6 +36,17 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
   var nomeController = TextEditingController();
   var nomeFocus = FocusNode();
   var barraCarregamento = false;
+  CoberturaContratualReq coberturaContratualReq = CoberturaContratualReq();
+  ConvenioReq convenioReq = ConvenioReq();
+  EquipeTransporteReq equipeTransporteReq = EquipeTransporteReq();
+  MeioTransporteReq meioTransporteReq = MeioTransporteReq();
+  MotivoNaoAtendidaReq motivoNaoAtendidaReq = MotivoNaoAtendidaReq();
+  MotivoRejeitadoReq motivoRejeitadoReq = MotivoRejeitadoReq();
+  MotivoReq motivoReq = MotivoReq();
+  MotivoSolicitacaoReq motivoSolicitacaoReq = MotivoSolicitacaoReq();
+  PrecaucaoReq precaucaoReq = PrecaucaoReq();
+  TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,50 +64,50 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
           cadastro.idUsuAlt = widget.pessoaLogada.usuario?.id;
           if (widget.isModoInclusao) {
             if (widget.title == 'Cobertura Contratual') {
-              await reqIncluirCoberturaContratual(cadastro, context);
+              await coberturaContratualReq.reqIncluirCoberturaContratual(cadastro, context);
             } else if (widget.title == 'Convênio') {
-              await reqIncluirConvenio(cadastro, context);
+              await convenioReq.reqIncluirConvenio(cadastro, context);
             } else if (widget.title == 'Equipe de Transporte') {
-              await reqIncluirEquipeTransporte(cadastro, context);
+              await equipeTransporteReq.reqIncluirEquipeTransporte(cadastro, context);
             } else if (widget.title == 'Meio de Transporte') {
-              await reqIncluirMeioTransporte(cadastro, context);
+              await meioTransporteReq.reqIncluirMeioTransporte(cadastro, context);
             } else if (widget.title == 'Motivo') {
-              await reqIncluirMotivo(cadastro, context);
+              await motivoReq.reqIncluirMotivo(cadastro, context);
             } else if (widget.title == 'Motivo da Transferência') {
-              await reqIncluirMotivoNaoAtendida(cadastro, context);
+              await motivoNaoAtendidaReq.reqIncluirMotivoNaoAtendida(cadastro, context);
             } else if (widget.title == 'Motivo Rejeitado') {
-              await reqIncluirMotivoRejeitado(cadastro, context);
+              await motivoRejeitadoReq.reqIncluirMotivoRejeitado(cadastro, context);
             } else if (widget.title == 'Motivo Solicitação') {
-              await reqIncluirMotivoSolicitacao(cadastro, context);
+              await motivoSolicitacaoReq.reqIncluirMotivoSolicitacao(cadastro, context);
             } else if (widget.title == 'Precaução') {
-              await reqIncluirPrecaucao(cadastro, context);
+              await precaucaoReq.reqIncluirPrecaucao(cadastro, context);
             } else if (widget.title == 'Tipo de Internação') {
-              await reqIncluirTipoInternacao(cadastro, context);
+              await tipoInternacaoReq.reqIncluirTipoInternacao(cadastro, context);
             }
           } else {
             cadastro.id = widget.item.id;
             cadastro.dtInc = widget.item.dtInc;
             cadastro.dtAlt = widget.item.dtAlt;
             if (widget.title == 'Cobertura Contratual') {
-              await reqAlterarCoberturaContratual(cadastro, widget.item.id, context);
+              await coberturaContratualReq.reqAlterarCoberturaContratual(cadastro, widget.item.id, context);
             } else if (widget.title == 'Convênio') {
-              await reqAlterarConvenio(cadastro, widget.item.id, context);
+              await convenioReq.reqAlterarConvenio(cadastro, widget.item.id, context);
             } else if (widget.title == 'Equipe de Transporte') {
-              await reqAlterarEquipeTransporte(cadastro, widget.item.id, context);
+              await equipeTransporteReq.reqAlterarEquipeTransporte(cadastro, widget.item.id, context);
             } else if (widget.title == 'Meio de Transporte') {
-              await reqAlterarMeioTransporte(cadastro, widget.item.id, context);
+              await meioTransporteReq.reqAlterarMeioTransporte(cadastro, widget.item.id, context);
             } else if (widget.title == 'Motivo') {
-              await reqAlterarMotivo(cadastro, widget.item.id, context);
+              await motivoReq.reqAlterarMotivo(cadastro, widget.item.id, context);
             } else if (widget.title == 'Motivo da Transferência') {
-              await reqAlterarMotivoNaoAtendida(cadastro, widget.item.id, context);
+              await motivoNaoAtendidaReq.reqAlterarMotivoNaoAtendida(cadastro, widget.item.id, context);
             } else if (widget.title == 'Motivo Rejeitado') {
-              await reqAlterarMotivoRejeitado(cadastro, widget.item.id, context);
+              await motivoRejeitadoReq.reqAlterarMotivoRejeitado(cadastro, widget.item.id, context);
             } else if (widget.title == 'Motivo Solicitação') {
-              await reqAlterarMotivoSolicitacao(cadastro, widget.item.id, context);
+              await motivoSolicitacaoReq.reqAlterarMotivoSolicitacao(cadastro, widget.item.id, context);
             } else if (widget.title == 'Precaução') {
-              await reqAlterarPrecaucao(cadastro, widget.item.id, context);
+              await precaucaoReq.reqAlterarPrecaucao(cadastro, widget.item.id, context);
             } else if (widget.title == 'Tipo de Internação') {
-              await reqAlterarTipoInternacao(cadastro, widget.item.id, context);
+              await tipoInternacaoReq.reqAlterarTipoInternacao(cadastro, widget.item.id, context);
             }
           }
           _limparCampos();
@@ -136,25 +147,25 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
       );
       if (confirmation) {
         if (widget.title == 'Cobertura Contratual') {
-          await reqExcluirCoberturaContratual(widget.item.id, context);
+          await coberturaContratualReq.reqExcluirCoberturaContratual(widget.item.id, context);
         } else if (widget.title == 'Convênio') {
-          await reqExcluirConvenio(widget.item.id, context);
+          await convenioReq.reqExcluirConvenio(widget.item.id, context);
         } else if (widget.title == 'Equipe de Transporte') {
-          await reqExcluirEquipeTransporte(widget.item.id, context);
+          await equipeTransporteReq.reqExcluirEquipeTransporte(widget.item.id, context);
         } else if (widget.title == 'Meio de Transporte') {
-          await reqExcluirMeioTransporte(widget.item.id, context);
+          await meioTransporteReq.reqExcluirMeioTransporte(widget.item.id, context);
         } else if (widget.title == 'Motivo') {
-          await reqExcluirMotivo(widget.item.id, context);
+          await motivoReq.reqExcluirMotivo(widget.item.id, context);
         } else if (widget.title == 'Motivo da Transferência') {
-          await reqExcluirMotivoNaoAtendida(widget.item.id, context);
+          await motivoNaoAtendidaReq.reqExcluirMotivoNaoAtendida(widget.item.id, context);
         } else if (widget.title == 'Motivo Rejeitado') {
-          await reqExcluirMotivoRejeitado(widget.item.id, context);
+          await motivoRejeitadoReq.reqExcluirMotivoRejeitado(widget.item.id, context);
         } else if (widget.title == 'Motivo Solicitação') {
-          await reqExcluirMotivoSolicitacao(widget.item.id, context);
+          await motivoSolicitacaoReq.reqExcluirMotivoSolicitacao(widget.item.id, context);
         } else if (widget.title == 'Precaução') {
-          await reqExcluirPrecaucao(widget.item.id, context);
+          await precaucaoReq.reqExcluirPrecaucao(widget.item.id, context);
         } else if (widget.title == 'Tipo de Internação') {
-          await reqExcluirTipoInternacao(widget.item.id, context);
+          await tipoInternacaoReq.reqExcluirTipoInternacao(widget.item.id, context);
         }
       }
       _mostrarBarraCarregamento();
@@ -221,12 +232,9 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (widget.isModoInclusao)
-                      Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Incluir'),
-                    if (!widget.isModoInclusao)
-                      Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Alterar'),
-                    if (!widget.isModoInclusao)
-                      Button(onPressed: () => excluir(), buttonColor: Colors.red, margin: EdgeInsets.all(8), text: 'Excluir'),
+                    if (widget.isModoInclusao) Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Incluir'),
+                    if (!widget.isModoInclusao) Button(onPressed: () => enter(), buttonColor: Colors.orange, margin: EdgeInsets.all(8), text: 'Alterar'),
+                    if (!widget.isModoInclusao) Button(onPressed: () => excluir(), buttonColor: Colors.red, margin: EdgeInsets.all(8), text: 'Excluir'),
                     Button(onPressed: () => Navigator.of(context).pop(), buttonColor: Colors.blueAccent, margin: EdgeInsets.all(8), text: 'Fechar'),
                   ],
                 ),

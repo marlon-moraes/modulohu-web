@@ -37,7 +37,7 @@ import 'package:modulohu_web/src/services/api/req/responsavel_req.dart';
 import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
 import 'package:modulohu_web/src/themes/theme.dart';
-import 'package:modulohu_web/src/utils/enum_telas.dart';
+import 'package:modulohu_web/src/utils/constants.dart';
 import 'package:modulohu_web/src/utils/login_validation.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
 
@@ -93,6 +93,14 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
   var transferencia = false;
   var contrato = false;
   var carregandoBeneficiario = false;
+  AtendimentoReq atendimentoReq = AtendimentoReq();
+  AssuntoReq assuntoReq = AssuntoReq();
+  CanalReq canalReq = CanalReq();
+  CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
+  EventoReq eventoReq = EventoReq();
+  ResponsavelReq responsavelReq = ResponsavelReq();
+  StatusReq statusReq = StatusReq();
+  TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +121,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         _mostrarBarraCarregamento();
         var filtro = AtendimentoSC();
         filtro.protocolo = protocoloController.text;
-        final res = await reqListarAtendimento(filtro, true, context);
+        final res = await atendimentoReq.reqListarAtendimento(filtro, true, context);
         setState(() => atendimentoCarregado = res.first);
         _popularCampos();
         _mostrarBarraCarregamento();
@@ -128,7 +136,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         filtroAtendimento.idUni = pessoaLogada.unidades?.first.idUni;
         filtroAtendimento.idUsuInc = pessoaLogada.usuario?.id;
         filtroAtendimento.idUsuAlt = pessoaLogada.usuario?.id;
-        var res = await reqIncluirAtendimento(filtroAtendimento, context);
+        var res = await atendimentoReq.reqIncluirAtendimento(filtroAtendimento, context);
         if (res.protocolo != null) {
           atendimentoCarregado = res;
           _popularCampos();
@@ -146,7 +154,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         filtroAtendimento.idUsuInc = pessoaLogada.usuario?.id;
         filtroAtendimento.idUsuAlt = pessoaLogada.usuario?.id;
         filtroAtendimento.id = atendimentoCarregado.id;
-        var res = await reqAlterarAtendimento(filtroAtendimento, context);
+        var res = await atendimentoReq.reqAlterarAtendimento(filtroAtendimento, context);
         if (res.protocolo != null) {
           atendimentoCarregado = res;
           _popularCampos();
@@ -187,7 +195,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         if (confirmation) {
           _formKey.currentState!.save();
           _mostrarBarraCarregamento();
-          var res = await reqCancelarAtendimento(atendimentoCarregado.id ?? '', context);
+          var res = await atendimentoReq.reqCancelarAtendimento(atendimentoCarregado.id ?? '', context);
           if (res) {
             setState(() => isCanceladoFinalizado = true);
             nomeStatusController.text = 'CANCELADO';
@@ -229,7 +237,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         if (confirmation) {
           _formKey.currentState!.save();
           _mostrarBarraCarregamento();
-          var res = await reqFinalizarAtendimento(atendimentoCarregado.id ?? '', context);
+          var res = await atendimentoReq.reqFinalizarAtendimento(atendimentoCarregado.id ?? '', context);
           if (res) {
             setState(() => isCanceladoFinalizado = true);
             nomeStatusController.text = 'FECHADO';
@@ -243,7 +251,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
     Future<void> reabrirAtendimento() async {
       if (!barraCarregamento) {
         _mostrarBarraCarregamento();
-        var res = await reqReabrirAtendimento(atendimentoCarregado.id!, context);
+        var res = await atendimentoReq.reqReabrirAtendimento(atendimentoCarregado.id!, context);
         if (res.protocolo != null) {
           atendimentoCarregado = res;
           _popularCampos();
@@ -264,7 +272,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         filtroEvento.dtEvento = DateTime.now().toString();
         filtroEvento.idUsuInc = pessoaLogada.usuario?.id;
         filtroEvento.idUsuAlt = pessoaLogada.usuario?.id;
-        final res = await reqIncluirEvento(filtroEvento, context);
+        final res = await eventoReq.reqIncluirEvento(filtroEvento, context);
         if (res) {
           _limparCamposEventos();
           _carregarEventos();
@@ -287,7 +295,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         filtroEvento.codigo = eventoCarregado.codigo;
         filtroEvento.idUsuInc = pessoaLogada.usuario?.id;
         filtroEvento.idUsuAlt = pessoaLogada.usuario?.id;
-        await reqAlterarEvento(filtroEvento, context);
+        await eventoReq.reqAlterarEvento(filtroEvento, context);
         _limparCamposEventos();
         _carregarEventos();
         _mostrarBarraCarregamento();
@@ -338,7 +346,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarStatus(true, false, context);
+                  final res = await statusReq.reqListarStatus(true, false, context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -356,10 +364,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -440,19 +445,13 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
           ),
           if (carregandoBeneficiario)
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: CircularProgressIndicator(color: Themes.loadingBarColor),
-            ),
+            Container(margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), child: CircularProgressIndicator(color: Themes.loadingBarColor)),
         ],
       );
     }
@@ -528,10 +527,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -558,7 +554,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarResponsavel(context);
+                  final res = await responsavelReq.reqListarResponsavel(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -576,10 +572,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -606,7 +599,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarTipoAtendimento(context);
+                  final res = await tipoAtendimentoReq.reqListarTipoAtendimento(context);
                   await showDialog(
                     context: context,
                     builder: (context) {
@@ -624,10 +617,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -654,7 +644,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarAssunto(context);
+                  final res = await assuntoReq.reqListarAssunto(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -672,10 +662,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -702,7 +689,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarCanal(context);
+                  final res = await canalReq.reqListarCanal(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -720,10 +707,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -750,7 +734,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: InkWell(
               onTap: () async {
                 if (!isCanceladoFinalizado) {
-                  final res = await reqListarCaraterAtendimento(context);
+                  final res = await caraterAtendimentoReq.reqListarCaraterAtendimento(context);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -768,10 +752,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                 }
               },
               child: Ink(
-                decoration: BoxDecoration(
-                  color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+                decoration: BoxDecoration(color: !isCanceladoFinalizado ? theme.colorScheme.primary : Colors.grey, borderRadius: BorderRadius.circular(4)),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
               ),
             ),
@@ -994,10 +975,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                                                 Row(mainAxisAlignment: MainAxisAlignment.center, children: botoesDadosGerais()),
                                                 if (eventos.isNotEmpty)
                                                   Container(
-                                                    decoration: BoxDecoration(
-                                                      color: theme.colorScheme.outline,
-                                                      borderRadius: BorderRadius.circular(4),
-                                                    ),
+                                                    decoration: BoxDecoration(color: theme.colorScheme.outline, borderRadius: BorderRadius.circular(4)),
                                                     width: Responsive.isLargeScreen(context) ? size.width * 0.88 : null,
                                                     child: SizedBox(
                                                       height: 368,
@@ -1135,9 +1113,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
                         if (Responsive.isSmallScreen(context))
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Button(onPressed: () => _limparCampos(), buttonColor: Colors.brown, margin: EdgeInsets.all(8), text: 'Limpar'),
-                            ],
+                            children: [Button(onPressed: () => _limparCampos(), buttonColor: Colors.brown, margin: EdgeInsets.all(8), text: 'Limpar')],
                           ),
                       ],
                     ),
@@ -1236,7 +1212,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
       if (protocoloController.text.isNotEmpty) {
         var filtro = AtendimentoSC();
         filtro.protocolo = protocoloController.text;
-        final atendimentoRes = await reqListarAtendimento(filtro, true, context);
+        final atendimentoRes = await atendimentoReq.reqListarAtendimento(filtro, true, context);
         setState(() {
           atendimentoCarregado = atendimentoRes.first;
           isModoInclusao = false;
@@ -1262,7 +1238,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
   }
 
   Future<void> _carregarEventos() async {
-    var res = await reqListarEvento(atendimentoCarregado.id ?? '', context);
+    var res = await eventoReq.reqListarEvento(atendimentoCarregado.id ?? '', context);
     eventos.clear();
     setState(() => eventos = res);
   }
@@ -1327,8 +1303,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
     idStatusController.text = atendimentoCarregado.status?.id ?? '';
     nomeStatusController.text = atendimentoCarregado.status?.nome ?? '';
     dtSolicitacaoController.text = dateFormatter(atendimentoCarregado.dtSolicitacao ?? '');
-    idBeneficiarioController.text =
-        atendimentoCarregado.beneficiarioCarteirinha != null ? atendimentoCarregado.beneficiarioCarteirinha.toString() : '';
+    idBeneficiarioController.text = atendimentoCarregado.beneficiarioCarteirinha != null ? atendimentoCarregado.beneficiarioCarteirinha.toString() : '';
     codBeneficiarioController.text = atendimentoCarregado.beneficiarioCpf ?? '';
     nomeBeneficiarioController.text = atendimentoCarregado.beneficiarioNome ?? '';
     contratoBeneficiarioController.text = atendimentoCarregado.beneficiarioContrato ?? '';

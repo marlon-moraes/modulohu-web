@@ -53,7 +53,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
   Estado? _estadoSelecionado;
   Cidade? _cidadeSelecionada;
 
-  // Chave para resetar o seletor de cidade quando o estado muda
+  // Chave para restaurar o seletor de cidade quando o estado muda
   final GlobalKey<DropdownSearchState<Cidade>> _cidadeDropdownKey = GlobalKey<DropdownSearchState<Cidade>>();
 
   @override

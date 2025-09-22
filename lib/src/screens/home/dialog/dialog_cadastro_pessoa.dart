@@ -30,6 +30,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
   var emailController = TextEditingController();
   var liberarCampos = false;
   var barraCarregamento = false;
+  PessoaCadastroReq pessoaCadastroReq = PessoaCadastroReq();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
         pessoa.prestador = prestador;
         pessoa.usuAlt = UsuAlt(id: widget.pessoaLogada.unidades?.first.idUni);
         _mostrarBarraCarregamento();
-        final res = await reqIncluirPessoa(pessoa, context);
+        final res = await pessoaCadastroReq.reqIncluirPessoa(pessoa, context);
         if (res.nome != null && res.nome != '') {
           widget.pessoaCadastro.cpf = res.cpf;
           widget.pessoaCadastro.nome = res.nome;
@@ -80,7 +81,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
                       child: FormTextField(
                         onChanged: (p0) async {
                           if (p0.length >= 14) {
-                            final res = await reqValidarPessoaCpf(p0, context);
+                            final res = await pessoaCadastroReq.reqValidarPessoaCpf(p0, context);
                             if ((res.nome != null && res.nome != '') && (widget.title == 'Beneficiário' && res.prestador == 'NAO')) {
                               widget.pessoaCadastro.cpf = res.cpf;
                               widget.pessoaCadastro.nome = res.nome;

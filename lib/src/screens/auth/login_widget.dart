@@ -62,9 +62,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             Container(
               color: theme.colorScheme.primary,
               height: 50,
-              child: Center(
-                child: Text('Login', style: TextStyle(fontSize: theme.textTheme.titleLarge!.fontSize, color: theme.colorScheme.onPrimary)),
-              ),
+              child: Center(child: Text('Login', style: TextStyle(fontSize: theme.textTheme.titleLarge!.fontSize, color: theme.colorScheme.onPrimary))),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.01, vertical: 8),

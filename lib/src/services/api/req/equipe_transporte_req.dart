@@ -11,14 +11,14 @@ import 'package:http/http.dart' as http;
 
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
-import 'package:modulohu_web/src/models/canal.dart';
+import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
 import 'package:modulohu_web/src/models/crud_cadastro.dart';
 import 'package:modulohu_web/src/services/api/req_serv.dart';
 import 'package:modulohu_web/src/services/router/api_routes.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
 
-class CanalReq {
+class EquipeTransporteReq {
   Map<String, String> get _defaultHeaders => {
     'accept': '*/*',
     'Content-Type': 'application/json',
@@ -27,9 +27,9 @@ class CanalReq {
     'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE',
   };
 
-  Future<void> reqIncluirCanal(CRUDCadastro filtro, BuildContext context) async {
-    Map<String, dynamic> json = {'canalBody': filtro.toJson()};
-    http.Response? response = await Requisition(ApiRoutes.incluirCanal).req(HttpRequests.POST, json, context, header: _defaultHeaders);
+  Future<void> reqIncluirEquipeTransporte(CRUDCadastro filtro, BuildContext context) async {
+    Map<String, dynamic> json = {'equipeTransporteTransfBody': filtro.toJson()};
+    http.Response? response = await Requisition(ApiRoutes.incluirEquipeTransporte).req(HttpRequests.POST, json, context, header: _defaultHeaders);
     if (response != null) {
       try {
         final body = jsonDecode(utf8.decode(response.bodyBytes));
@@ -46,14 +46,14 @@ class CanalReq {
     }
   }
 
-  Future<List<Canal>> reqListarCanal(BuildContext context) async {
+  Future<List<CadastrosTransferenciaRes>> reqListarEquipeTransporte(BuildContext context) async {
     Map<String, dynamic> json = {};
-    http.Response? response = await Requisition(ApiRoutes.listarCanal).req(HttpRequests.POST, json, context, header: _defaultHeaders);
+    http.Response? response = await Requisition(ApiRoutes.listarEquipeTransporte).req(HttpRequests.POST, json, context, header: _defaultHeaders);
     if (response != null) {
       try {
         final body = jsonDecode(utf8.decode(response.bodyBytes));
         if (body['sucesso']) {
-          return (body['canais'] as List).map((e) => Canal.fromJson(e)).toList();
+          return (body['equipes'] as List).map((e) => CadastrosTransferenciaRes.fromJson(e)).toList();
         } else {
           showDialog(context: context, builder: (_) => Alert(success: false, isModal: false, child: Text(body['mensagem'])));
         }
@@ -66,9 +66,9 @@ class CanalReq {
     return [];
   }
 
-  Future<void> reqAlterarCanal(CRUDCadastro filtro, BuildContext context) async {
-    Map<String, dynamic> json = {'canal': filtro.toJson()};
-    http.Response? response = await Requisition(ApiRoutes.alterarCanal).req(HttpRequests.PUT, json, context, header: _defaultHeaders);
+  Future<void> reqAlterarEquipeTransporte(CRUDCadastro filtro, String id, BuildContext context) async {
+    Map<String, dynamic> json = {'equipeTransporteTransfBody': filtro.toJson(), 'id': id};
+    http.Response? response = await Requisition(ApiRoutes.alterarEquipeTransporte).req(HttpRequests.PUT, json, context, header: _defaultHeaders);
     if (response != null) {
       try {
         final body = jsonDecode(utf8.decode(response.bodyBytes));
@@ -85,10 +85,10 @@ class CanalReq {
     }
   }
 
-  Future<void> reqExcluirCanal(String id, BuildContext context) async {
+  Future<void> reqExcluirEquipeTransporte(String id, BuildContext context) async {
     final headers = {..._defaultHeaders, 'id': id};
     Map<String, dynamic> json = {};
-    http.Response? response = await Requisition(ApiRoutes.excluirCanal).req(HttpRequests.DELETE, json, context, header: headers);
+    http.Response? response = await Requisition(ApiRoutes.excluirEquipeTransporte).req(HttpRequests.DELETE, json, context, header: headers);
     if (response != null) {
       try {
         final body = jsonDecode(utf8.decode(response.bodyBytes));
