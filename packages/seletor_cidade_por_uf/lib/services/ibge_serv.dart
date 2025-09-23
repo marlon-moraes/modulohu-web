@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/models/cidade.dart';
-import 'package:modulohu_web/src/models/estado.dart';
+import 'package:seletor_cidade_por_uf/models/cidade.dart';
+import 'package:seletor_cidade_por_uf/models/estado.dart';
 
 /// Serviço para consulta de estados e cidades via API do IBGE.
 ///

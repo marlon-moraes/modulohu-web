@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// 📦 Package imports:
+import 'package:seletor_cidade_por_uf/seletor_cidade_por_uf.dart';
+
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/services/api/req/auth_req.dart';
@@ -108,7 +111,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ],
                   ),
-                  // SeletorCidadePorEstado(),
+                  // SeletorCidadePorUf(),
                 ],
               ),
             ),

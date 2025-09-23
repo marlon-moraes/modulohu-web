@@ -10,4 +10,3 @@ export 'header.dart';
 export 'loading_bar.dart';
 export 'message.dart';
 export 'responsive.dart';
-export 'seletor_cidade_por_estado.dart';

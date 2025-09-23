@@ -23,10 +23,10 @@ import 'package:modulohu_web/src/components/responsive.dart';
 /// é necessário. Ele fornece uma maneira consistente de exibir informações
 /// importantes na parte inferior da interface do usuário.
 class Footer extends StatelessWidget {
-  final String unimedText = 'Unimed Noroeste/RS Sociedade Cooperativa de Assistência à saúde Ltda.';
-
-  final String ansText = 'ANS - nº 357260';
   const Footer({super.key});
+
+  final String unimedText = 'Unimed Noroeste/RS Sociedade Cooperativa de Assistência à saúde Ltda.';
+  final String ansText = 'ANS - nº 357260';
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +47,8 @@ class Footer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          unimedText,
-          style: TextStyle(fontSize: theme.textTheme.bodySmall!.fontSize, color: theme.colorScheme.surface),
-          overflow: TextOverflow.ellipsis,
-        ),
-        Text(
-          ansText,
-          style: TextStyle(fontSize: theme.textTheme.bodySmall!.fontSize, color: theme.colorScheme.surface),
-          overflow: TextOverflow.ellipsis,
-        ),
+        Text(unimedText, style: TextStyle(fontSize: theme.textTheme.bodySmall!.fontSize, color: theme.colorScheme.surface), overflow: TextOverflow.ellipsis),
+        Text(ansText, style: TextStyle(fontSize: theme.textTheme.bodySmall!.fontSize, color: theme.colorScheme.surface), overflow: TextOverflow.ellipsis),
       ],
     );
   }

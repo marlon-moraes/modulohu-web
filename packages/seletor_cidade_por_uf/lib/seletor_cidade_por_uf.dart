@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/models/cidade.dart';
-import 'package:modulohu_web/src/models/estado.dart';
-import 'package:modulohu_web/src/services/api/ibge_serv.dart';
+import 'package:seletor_cidade_por_uf/models/cidade.dart';
+import 'package:seletor_cidade_por_uf/models/estado.dart';
+import 'package:seletor_cidade_por_uf/services/ibge_serv.dart';
 
 /// Widget para seleção de cidade baseada no estado (UF).
 ///
-/// O widget [SeletorCidadePorEstado] permite ao usuário selecionar um estado brasileiro
+/// O widget [SeletorCidadePorUf] permite ao usuário selecionar um estado brasileiro
 /// e, em seguida, escolher uma cidade pertencente ao estado selecionado. Utiliza
 /// dropdowns com busca assíncrona, integrando-se à API do IBGE para obter os dados.
 ///
@@ -26,7 +26,7 @@ import 'package:modulohu_web/src/services/api/ibge_serv.dart';
 ///
 /// ## Exemplo de Uso:
 /// ```dart
-/// SeletorCidadePorEstado()
+/// SeletorCidadePorUf()
 /// ```
 ///
 /// ## Uso:
@@ -39,14 +39,14 @@ import 'package:modulohu_web/src/services/api/ibge_serv.dart';
 /// - Os dados de estados e cidades são obtidos de forma assíncrona via [IBGEService].
 /// - O campo de cidade é zerado automaticamente ao trocar o estado.
 /// - Permite busca por nome ou sigla nos estados e por nome nas cidades.
-class SeletorCidadePorEstado extends StatefulWidget {
-  const SeletorCidadePorEstado({super.key});
+class SeletorCidadePorUf extends StatefulWidget {
+  const SeletorCidadePorUf({super.key});
 
   @override
-  State<SeletorCidadePorEstado> createState() => _SeletorCidadePorEstadoState();
+  State<SeletorCidadePorUf> createState() => _SeletorCidadePorUfState();
 }
 
-class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
+class _SeletorCidadePorUfState extends State<SeletorCidadePorUf> {
   final IBGEService _ibgeService = IBGEService();
 
   // Variáveis para armazenar os itens selecionados
@@ -67,12 +67,7 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             // Configurações do Popup
             popupProps: PopupProps.menu(
               searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(8),
-                  labelText: 'Pesquisar Estado',
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
+                decoration: InputDecoration(contentPadding: EdgeInsets.all(8), labelText: 'Pesquisar Estado', border: OutlineInputBorder(), isDense: true),
                 autofocus: true,
               ),
               itemBuilder: (context, estado, isSelected) => ListTile(title: Text(estado.nome), subtitle: Text(estado.sigla)),
@@ -128,16 +123,16 @@ class _SeletorCidadePorEstadoState extends State<SeletorCidadePorEstado> {
             // Configurações do Popup com busca
             popupProps: const PopupProps.menu(
               searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(8),
-                  labelText: 'Pesquisar Cidade',
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
+                decoration: InputDecoration(contentPadding: EdgeInsets.all(8), labelText: 'Pesquisar Cidade', border: OutlineInputBorder(), isDense: true),
                 autofocus: true,
               ),
               showSearchBox: true,
             ),
+            filterFn: (item, filter) {
+              final nomeNormalizado = item.nome.toLowerCase();
+              final filtroNormalizado = filter.toLowerCase();
+              return nomeNormalizado.contains(filtroNormalizado);
+            },
             // Busca as cidades de forma assíncrona, dependendo do estado selecionado
             asyncItems: (String filter) {
               if (_estadoSelecionado == null) return Future.value([]); // Retorna lista vazia se nenhum estado foi selecionado
