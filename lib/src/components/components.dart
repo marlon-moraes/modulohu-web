@@ -1,7 +1,7 @@
-export '../utils/date_formatter.dart';
-export '../utils/datepicker_dialog.dart';
-export '../utils/field_validations.dart';
-export '../utils/mask.dart';
+export '../utils/deprecated/date_formatter.dart';
+export '../utils/deprecated/datepicker_dialog.dart';
+export '../utils/deprecated/field_validations.dart';
+export '../utils/deprecated/mask.dart';
 export 'alert.dart';
 export 'button.dart';
 export 'footer.dart';

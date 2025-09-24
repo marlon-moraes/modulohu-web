@@ -7,7 +7,7 @@ import 'package:modulohu_web/src/models/cobertura.dart';
 import 'package:modulohu_web/src/models/contrato.dart';
 import 'package:modulohu_web/src/models/modulo_beneficiario.dart';
 import 'package:modulohu_web/src/services/api/req/contrato_req.dart';
-import 'package:modulohu_web/src/utils/cpf_cnpj_formatter.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class InformacoesContratuaisTab extends StatefulWidget {
   final String carteirinha;
@@ -25,6 +25,8 @@ class ModulosDependentesDataSource extends DataTableSource {
   final BuildContext context;
 
   ModulosDependentesDataSource(this._list, this.size, this.context);
+
+  Utils utils = Utils();
 
   @override
   bool get isRowCountApproximate => false;
@@ -74,10 +76,10 @@ class ModulosDependentesDataSource extends DataTableSource {
         DataCell(VerticalDivider()),
         DataCell(
           Tooltip(
-            message: dateFormatter(item.dtInicioVigencia ?? ''),
+            message: utils.dateFormatter(item.dtInicioVigencia ?? ''),
             child: SizedBox(
               width: Responsive.isLargeScreen(context) ? size.width * 0.1 : null,
-              child: Text(dateFormatter(item.dtInicioVigencia ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
+              child: Text(utils.dateFormatter(item.dtInicioVigencia ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
             ),
           ),
         ),
@@ -177,6 +179,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
   var iniVigBeneficiarioController = TextEditingController();
   var dataBaseCoberturaController = TextEditingController();
   ContratoReq contratoReq = ContratoReq();
+  Utils utils = Utils();
 
   Widget codContrato() {
     return FormTextField(
@@ -280,7 +283,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
           Expanded(
             child: FormTextField(
               controller: iniVigContratoController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               text: 'Ini. Vig. Contrato',
               enabled: true,
@@ -306,7 +309,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
           Expanded(
             child: FormTextField(
               controller: iniVigBeneficiarioController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               text: 'Ini. Vig. Beneficiário',
               enabled: true,
@@ -332,7 +335,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
           Expanded(
             child: FormTextField(
               controller: dataBaseCoberturaController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               text: 'Data Base Cobertura',
               enabled: true,
@@ -536,7 +539,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
       linhaController.text = _contrato.linhaModuloOperadora ?? '';
       codModuloController.text = _contrato.codModuloOperadora ?? '';
       nomeContaController.text = _contrato.nomeContratante ?? '';
-      cpfCnpjController.text = cpfCnpjFormatter(_contrato.cpfCnpjContratante ?? '');
+      cpfCnpjController.text = utils.cpfCnpjFormatter(_contrato.cpfCnpjContratante ?? '');
       abrangenciaController.text = _contrato.abrangencia ?? '';
       tipoContratoController.text = _contrato.tipoContratacao ?? '';
       nomeModuloController.text = _contrato.nomeModuloOperadora ?? '';
@@ -544,7 +547,7 @@ class _InformacoesContratuaisTabState extends State<InformacoesContratuaisTab> {
       modeloContratoController.text = _contrato.modeloContrato ?? '';
       segmentacaoController.text = _contrato.segmentacao ?? '';
       codPlanoController.text = _contrato.codClasse ?? '';
-      iniVigContratoController.text = dateFormatter(_contrato.inicioVigencia ?? '');
+      iniVigContratoController.text = utils.dateFormatter(_contrato.inicioVigencia ?? '');
     });
   }
 }

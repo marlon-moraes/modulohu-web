@@ -18,8 +18,8 @@ import 'package:modulohu_web/src/services/api/req/beneficiario_req.dart';
 import 'package:modulohu_web/src/services/api/req/medico_solicitante_req.dart';
 import 'package:modulohu_web/src/services/api/req/pessoa_cadastro_req.dart';
 import 'package:modulohu_web/src/services/api/req/procedimentos_req.dart';
-import 'package:modulohu_web/src/utils/cpf_cnpj_formatter.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class DialogListagem extends StatefulWidget {
   final String title;
@@ -57,6 +57,7 @@ class ListDataSource extends DataTableSource {
   ListDataSource(this.title, this._list, this.id, this.nome, this.contrato, this.cardio, this.context);
 
   final _sharedPref = SharedPref();
+  Utils utils = Utils();
 
   @override
   bool get isRowCountApproximate => false;
@@ -80,7 +81,7 @@ class ListDataSource extends DataTableSource {
                     title == 'Médico Solicitante ' ||
                     title == 'Médico que irá Receber o Paciente') &&
                 cardio))
-          DataCell(SizedBox(child: Text(cpfCnpjFormatter(item.pessoa.cnp ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2))),
+          DataCell(SizedBox(child: Text(utils.cpfCnpjFormatter(item.pessoa.cnp ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2))),
         if (title != 'Médico Solicitante' &&
             title != 'Beneficiário' &&
             ((title == 'Instituição de Origem' ||
@@ -183,6 +184,7 @@ class _DialogListagemState extends State<DialogListagem> {
   MedicoSolicitanteReq medicoSolicitanteReq = MedicoSolicitanteReq();
   PessoaCadastroReq pessoaCadastroReq = PessoaCadastroReq();
   ProcedimentosReq reqListarProcedimentos = ProcedimentosReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -312,7 +314,7 @@ class _DialogListagemState extends State<DialogListagem> {
                         Expanded(
                           child: FormTextField(
                             margin: const EdgeInsets.all(8),
-                            inputFormatters: [onlyNumbers, CpfOuCnpjFormatter()],
+                            inputFormatters: [utils.onlyNumbers, CpfOuCnpjFormatter()],
                             controller: cpfController,
                             text: 'CPF/CNPJ',
                           ),

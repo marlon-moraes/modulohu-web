@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/services/api/req/auth_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class DialogTrocarSenha extends StatefulWidget {
   final String userCode;
@@ -40,11 +41,12 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
   var contemNumero = false;
   var contemSimbolo = false;
   var mesmaSenha = false;
+  AuthReq authReq = AuthReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    AuthReq authReq = AuthReq();
 
     Widget haveTenCharacters() {
       return Expanded(
@@ -180,9 +182,9 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FormTextField(
-                        validator: (p0) => fieldValidation(p0, 'Usuário'),
+                        validator: (p0) => utils.fieldValidation(p0, 'Usuário'),
                         margin: const EdgeInsets.all(8),
-                        inputFormatters: [onlyNumbers],
+                        inputFormatters: [utils.onlyNumbers],
                         controller: userController,
                         enter: () => trocarSenha(),
                         focusNode: userFocus,
@@ -233,7 +235,7 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
                             }
                             if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) setState(() => mesmaSenha = false);
                           },
-                          validator: (p0) => fieldValidation(p0, 'Nova Senha'),
+                          validator: (p0) => utils.fieldValidation(p0, 'Nova Senha'),
                           controller: newPasswordController,
                           margin: const EdgeInsets.all(8),
                           focusNode: newPasswordFocus,
@@ -261,7 +263,7 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
                             }
                             if (confirmPasswordController.text.isEmpty || newPasswordController.text.isEmpty) setState(() => mesmaSenha = false);
                           },
-                          validator: (p0) => fieldValidation(p0, 'Confirmar Nova Senha'),
+                          validator: (p0) => utils.fieldValidation(p0, 'Confirmar Nova Senha'),
                           controller: confirmPasswordController,
                           focusNode: confirmPasswordFocus,
                           margin: const EdgeInsets.all(8),
@@ -271,10 +273,7 @@ class _DialogTrocarSenhaState extends State<DialogTrocarSenha> {
                         ),
                       ),
                       loadingBar(barraCarregamento),
-                      Container(
-                        margin: const EdgeInsets.only(left: 8, top: 4, right: 8, bottom: 2),
-                        child: const Text('Regras de Formatação da Senha:'),
-                      ),
+                      Container(margin: const EdgeInsets.only(left: 8, top: 4, right: 8, bottom: 2), child: const Text('Regras de Formatação da Senha:')),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         child:

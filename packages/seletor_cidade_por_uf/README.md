@@ -1,39 +1,24 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# seletor_cidade_por_uf
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Widget Flutter para seleção de cidades brasileiras a partir do estado (UF), com busca assíncrona integrada à API do IBGE.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Visão Geral
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+O SeletorCidadePorUf é um widget reutilizável que permite ao usuário selecionar um estado brasileiro e, em seguida, escolher uma cidade pertencente ao estado selecionado. Ele utiliza dropdowns com busca, tornando a experiência de seleção rápida e intuitiva, mesmo com grandes listas.
 
-## Features
+- Busca assíncrona de estados e cidades via API do IBGE
+- Dropdowns com busca por nome ou sigla (estado) e nome (cidade)
+- Seleção de cidade habilitada apenas após seleção do estado
+- Reset automático da cidade ao trocar o estado
+- Fácil integração em formulários Flutter
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Detalhes Técnicos
 
-## Getting started
+- Utiliza o pacote dropdown_search para os campos de seleção.
+- Os dados de estados e cidades são obtidos de forma assíncrona via API do IBGE.
+- O campo de cidade é resetado automaticamente ao trocar o estado.
+- Permite busca por nome ou sigla nos estados e por nome nas cidades.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## Licença
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+MIT

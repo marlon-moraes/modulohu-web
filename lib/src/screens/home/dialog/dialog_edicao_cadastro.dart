@@ -12,6 +12,7 @@ import 'package:modulohu_web/src/services/api/req/canal_req.dart';
 import 'package:modulohu_web/src/services/api/req/carater_atendimento_req.dart';
 import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class DialogEdicaoCadastro extends StatefulWidget {
   final String title;
@@ -40,6 +41,7 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
   CaraterAtendimentoReq caraterAtendimentoReq = CaraterAtendimentoReq();
   StatusReq statusReq = StatusReq();
   TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +179,7 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
                             child: FormTextField(
                               onSaved: (p0) => cadastro.codigo = int.tryParse(p0!),
                               margin: const EdgeInsets.all(8),
-                              inputFormatters: [onlyNumbers],
+                              inputFormatters: [utils.onlyNumbers],
                               controller: codController,
                               enter: () => enter(),
                               enabled: false,
@@ -187,7 +189,7 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
                           Expanded(
                             flex: 2,
                             child: FormTextField(
-                              validator: (p0) => fieldValidation(p0, 'Nome'),
+                              validator: (p0) => utils.fieldValidation(p0, 'Nome'),
                               onSaved: (p0) => cadastro.nome = p0,
                               margin: const EdgeInsets.all(8),
                               controller: nomeController,
@@ -200,9 +202,9 @@ class _DialogEdicaoCadastroState extends State<DialogEdicaoCadastro> {
                             Expanded(
                               child: FormTextField(
                                 onSaved: (p0) => cadastro.prazo = int.tryParse(p0!),
-                                validator: (p0) => fieldValidation(p0, 'Prazo'),
+                                validator: (p0) => utils.fieldValidation(p0, 'Prazo'),
                                 margin: const EdgeInsets.all(8),
-                                inputFormatters: [onlyNumbers],
+                                inputFormatters: [utils.onlyNumbers],
                                 controller: prazoController,
                                 focusNode: prazoFocus,
                                 enter: () => enter(),

@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:logging_interceptor/logging_interceptor.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/environment.dart' as env;
 import 'package:modulohu_web/src/components/components.dart';
-import 'package:modulohu_web/src/services/api/http_interceptor.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
 
@@ -127,9 +127,7 @@ class Requisition {
           );
         } else if (response.statusCode == 404) {
           throw ApiException(
-            jsonDecode(utf8.decode(response.bodyBytes))['mensagem'] ??
-                jsonDecode(utf8.decode(response.bodyBytes))['erro'] ??
-                '404 - Recurso não encontrado',
+            jsonDecode(utf8.decode(response.bodyBytes))['mensagem'] ?? jsonDecode(utf8.decode(response.bodyBytes))['erro'] ?? '404 - Recurso não encontrado',
           );
         } else if (response.statusCode == 409) {
           throw ApiException(
@@ -147,9 +145,7 @@ class Requisition {
           throw ApiException(response.body);
         } else {
           throw ApiException(
-            jsonDecode(utf8.decode(response.bodyBytes))['mensagem'] ??
-                jsonDecode(utf8.decode(response.bodyBytes))['erro'] ??
-                '500 - Erro do Servidor Interno',
+            jsonDecode(utf8.decode(response.bodyBytes))['mensagem'] ?? jsonDecode(utf8.decode(response.bodyBytes))['erro'] ?? '500 - Erro do Servidor Interno',
           );
         }
       }
@@ -159,11 +155,7 @@ class Requisition {
       showDialog(
         context: context,
         builder: (_) {
-          return Alert(
-            success: false,
-            isModal: false,
-            child: e.toString().contains('<!doctype html>') ? Html(data: e.toString()) : Text(e.toString()),
-          );
+          return Alert(success: false, isModal: false, child: e.toString().contains('<!doctype html>') ? Html(data: e.toString()) : Text(e.toString()));
         },
       );
     }

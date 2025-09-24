@@ -40,7 +40,9 @@ import 'package:seletor_cidade_por_uf/services/ibge_serv.dart';
 /// - O campo de cidade é zerado automaticamente ao trocar o estado.
 /// - Permite busca por nome ou sigla nos estados e por nome nas cidades.
 class SeletorCidadePorUf extends StatefulWidget {
-  const SeletorCidadePorUf({super.key});
+  final void Function(Cidade?)? onSaved;
+
+  const SeletorCidadePorUf({super.key, this.onSaved});
 
   @override
   State<SeletorCidadePorUf> createState() => _SeletorCidadePorUfState();
@@ -110,6 +112,10 @@ class _SeletorCidadePorUfState extends State<SeletorCidadePorUf> {
                 });
               }
             },
+            validator: (value) {
+              if (value == null) return 'Por favor, selecione um Estado';
+              return null;
+            },
           ),
         ),
         // Dropdown com busca para Cidades
@@ -151,6 +157,11 @@ class _SeletorCidadePorUfState extends State<SeletorCidadePorUf> {
             ),
             selectedItem: _cidadeSelecionada,
             onChanged: (Cidade? novaCidade) => setState(() => _cidadeSelecionada = novaCidade),
+            onSaved: widget.onSaved,
+            validator: (value) {
+              if (value == null) return 'Por favor, selecione uma Cidade';
+              return null;
+            },
           ),
         ),
       ],

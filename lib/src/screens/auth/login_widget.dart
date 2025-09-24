@@ -8,6 +8,7 @@ import 'package:seletor_cidade_por_uf/seletor_cidade_por_uf.dart';
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/services/api/req/auth_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -26,6 +27,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final passwordFocus = FocusNode();
   var barraCarregamento = false;
   AuthReq authReq = AuthReq();
+  Utils utils = Utils();
 
   Future<void> _logar() async {
     if (!barraCarregamento) {
@@ -72,9 +74,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               child: Column(
                 children: [
                   FormTextField(
-                    validator: (p0) => fieldValidation(p0, 'Usuário'),
+                    validator: (p0) => utils.fieldValidation(p0, 'Usuário'),
                     margin: const EdgeInsets.all(8),
-                    inputFormatters: [onlyNumbers],
+                    inputFormatters: [utils.onlyNumbers],
                     controller: userController,
                     enter: () => _logar(),
                     focusNode: userFocus,
@@ -88,7 +90,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     },
                     focusNode: secretFocus,
                     child: FormTextField(
-                      validator: (p0) => fieldValidation(p0, 'Senha'),
+                      validator: (p0) => utils.fieldValidation(p0, 'Senha'),
                       margin: const EdgeInsets.all(8),
                       controller: passWordController,
                       focusNode: passwordFocus,
@@ -111,7 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ],
                   ),
-                  // SeletorCidadePorUf(),
+                  // SeletorCidadePorUf(onSaved: (value) {}),
                 ],
               ),
             ),

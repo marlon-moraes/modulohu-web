@@ -17,6 +17,7 @@ import 'package:modulohu_web/src/models/atendimento.dart';
 import 'package:modulohu_web/src/models/crud_anexo.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/services/api/req/anexo_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class AnexosTab extends StatefulWidget {
   final UserAction pessoaLogada;
@@ -48,6 +49,7 @@ class AnexosDataSource extends DataTableSource {
   AnexosDataSource(this._list, this.arquivo, this.descricao, this.idAnexo, this.size, this.alterarModo, this.context);
 
   AnexoReq anexoReq = AnexoReq();
+  Utils utils = Utils();
 
   @override
   bool get isRowCountApproximate => false;
@@ -70,7 +72,7 @@ class AnexosDataSource extends DataTableSource {
             message: 'Selecionar Anexo',
             child: SizedBox(
               width: Responsive.isLargeScreen(context) ? size.width * 0.1 : null,
-              child: Text(dateFormatter(item.dtInc ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
+              child: Text(utils.dateFormatter(item.dtInc ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
             ),
           ),
         ),

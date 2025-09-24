@@ -16,8 +16,8 @@ import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/listagem/listagem_widget.dart';
 import 'package:modulohu_web/src/screens/home/side_menu.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/login_validation.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class ListagemView extends StatefulWidget {
   const ListagemView({super.key});
@@ -31,6 +31,7 @@ class _ListagemViewState extends State<ListagemView> {
   final _sharedPref = SharedPref();
   Timer? _dadosTimer;
   var pessoaLogada = UserAction();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _ListagemViewState extends State<ListagemView> {
   }
 
   Future<void> _carregarDados() async {
-    if (await validarLogin()) {
+    if (await utils.logonValidation()) {
       final retorno = await _sharedPref.read('pessoaLogada') ?? '{}';
       setState(() => pessoaLogada = UserAction.fromJson(jsonDecode(retorno)['usuarioActions']));
     } else {

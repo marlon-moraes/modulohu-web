@@ -22,6 +22,7 @@ import 'package:modulohu_web/src/services/api/req/responsavel_req.dart';
 import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 final _sharedPref = SharedPref();
 
@@ -40,6 +41,8 @@ class ListDataSource extends DataTableSource {
   final BuildContext context;
 
   ListDataSource(this._list, this.size, this.context);
+
+  Utils utils = Utils();
 
   @override
   bool get isRowCountApproximate => false;
@@ -74,7 +77,7 @@ class ListDataSource extends DataTableSource {
         DataCell(
           SizedBox(
             width: Responsive.isLargeScreen(context) ? size.width * 0.1 : size.width * 0.25,
-            child: Text(dateFormatter(item.dtSolicitacao ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
+            child: Text(utils.dateFormatter(item.dtSolicitacao ?? ''), overflow: TextOverflow.ellipsis, maxLines: 2),
           ),
         ),
         DataCell(VerticalDivider()),
@@ -152,6 +155,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
   ResponsavelReq responsavelReq = ResponsavelReq();
   StatusReq statusReq = StatusReq();
   TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +168,8 @@ class _ListagemWidgetState extends State<ListagemWidget> {
         _mostrarBarraCarregamento();
         filtro.protocolo = nomeProtocoloController.text.isNotEmpty ? nomeProtocoloController.text : null;
         filtro.nome = nomeNomeController.text.isNotEmpty ? nomeNomeController.text : null;
-        filtro.dtSolicitacaoIni = nomeDtSolIniController.text.isNotEmpty ? dateFormatter2(nomeDtSolIniController.text, false) : null;
-        filtro.dtSolicitacaoFim = nomeDtSolFinController.text.isNotEmpty ? dateFormatter2(nomeDtSolFinController.text, false) : null;
+        filtro.dtSolicitacaoIni = nomeDtSolIniController.text.isNotEmpty ? utils.dateFormatter2(nomeDtSolIniController.text, false) : null;
+        filtro.dtSolicitacaoFim = nomeDtSolFinController.text.isNotEmpty ? utils.dateFormatter2(nomeDtSolFinController.text, false) : null;
         filtro.tipo = idTipoAtendimentoController.text.isNotEmpty ? idTipoAtendimentoController.text : null;
         filtro.assunto = idAssuntoController.text.isNotEmpty ? idAssuntoController.text : null;
         filtro.responsavel = idResponsavelController.text.isNotEmpty ? idResponsavelController.text : null;
@@ -401,7 +405,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
           Expanded(
             child: FormTextField(
               controller: nomeDtSolIniController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               text: 'Dt Solicitação Inicial',
               enabled: true,
@@ -410,7 +414,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
           Container(
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
-              onTap: () => selecionarData(nomeDtSolIniController, true, context),
+              onTap: () => utils.dateSelector(nomeDtSolIniController, true, context),
               child: Ink(
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: theme.colorScheme.primary),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
@@ -427,7 +431,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
           Expanded(
             child: FormTextField(
               controller: nomeDtSolFinController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               text: 'Dt Solicitação Final',
               enabled: true,
@@ -436,7 +440,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
           Container(
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
-              onTap: () => selecionarData(nomeDtSolFinController, false, context),
+              onTap: () => utils.dateSelector(nomeDtSolFinController, false, context),
               child: Ink(
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: theme.colorScheme.primary),
                 child: Icon(Icons.more_horiz_outlined, color: theme.colorScheme.onPrimary),
@@ -681,7 +685,7 @@ class _ListagemWidgetState extends State<ListagemWidget> {
                                         Text('  ${item.beneficiarioNome ?? ''}'),
                                         const SizedBox(height: 4),
                                         Text('Dt Solicitação', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                        Text('  ${dateFormatter(item.dtSolicitacao ?? '')}'),
+                                        Text('  ${utils.dateFormatter(item.dtSolicitacao ?? '')}'),
                                         const SizedBox(height: 4),
                                         Text('Tipo Atendimento', style: const TextStyle(fontWeight: FontWeight.bold)),
                                         Text('  ${item.tipo?.nome ?? ''}'),

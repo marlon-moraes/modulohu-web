@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // 🌎 Project imports:
 import 'package:modulohu_web/environment.dart' as env;
 import 'package:modulohu_web/src/components/components.dart';
-import 'package:modulohu_web/src/utils/logout.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 /// Um widget que representa o cabeçalho da aplicação.
 ///
@@ -40,12 +40,19 @@ import 'package:modulohu_web/src/utils/logout.dart';
 /// é necessário. Ele fornece uma maneira consistente de exibir informações
 /// importantes na parte superior da interface do usuário, além de permitir
 /// a troca de temas e a opção de logout.
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   final bool isAuth;
   final String? title;
   final TabBar? bottom;
 
   const Header({super.key, required this.isAuth, this.title, this.bottom});
+
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,7 @@ class Header extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(left: 10),
               child: Text(
-                title == null || title == '' ? env.title : 'Bem vindo(a), $title',
+                widget.title == null || widget.title == '' ? env.title : 'Bem vindo(a), ${widget.title}',
                 style: TextStyle(fontSize: Responsive.isLargeScreen(context) ? 22 : 18, fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -71,7 +78,7 @@ class Header extends StatelessWidget {
       ),
       foregroundColor: theme.colorScheme.onSecondary,
       backgroundColor: theme.colorScheme.secondary,
-      automaticallyImplyLeading: !isAuth,
+      automaticallyImplyLeading: !widget.isAuth,
       centerTitle: true,
       actions: [
         Container(
@@ -88,12 +95,12 @@ class Header extends StatelessWidget {
             onPressed: () => EasyDynamicTheme.of(context).changeTheme(),
           ),
         ),
-        if (!isAuth)
+        if (!widget.isAuth)
           Container(
             margin: const EdgeInsets.only(left: 4, top: 8, right: 8, bottom: 8),
             child: InkWell(
               borderRadius: BorderRadius.circular(16),
-              onTap: () => logout(context),
+              onTap: () => utils.logout(context),
               child: Ink(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 height: 49,
@@ -111,7 +118,7 @@ class Header extends StatelessWidget {
             ),
           ),
       ],
-      bottom: bottom,
+      bottom: widget.bottom,
     );
   }
 }

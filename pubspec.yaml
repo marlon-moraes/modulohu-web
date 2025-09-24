@@ -29,6 +29,8 @@ dependencies:
   import_sorter: ^4.6.0
   intl: ^0.20.2
   logger: ^2.5.0
+  logging_interceptor:
+    path: packages/logging_interceptor
   mask_text_input_formatter: ^2.9.0
   seletor_cidade_por_uf:
     path: packages/seletor_cidade_por_uf

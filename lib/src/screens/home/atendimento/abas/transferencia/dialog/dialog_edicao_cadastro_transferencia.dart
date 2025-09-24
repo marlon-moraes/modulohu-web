@@ -17,6 +17,7 @@ import 'package:modulohu_web/src/services/api/req/motivo_req.dart';
 import 'package:modulohu_web/src/services/api/req/motivo_solicitacao_req.dart';
 import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class DialogEdicaoCadastroTransferencia extends StatefulWidget {
   final String title;
@@ -46,6 +47,7 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
   MotivoSolicitacaoReq motivoSolicitacaoReq = MotivoSolicitacaoReq();
   PrecaucaoReq precaucaoReq = PrecaucaoReq();
   TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +206,7 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
                             child: FormTextField(
                               onSaved: (p0) => cadastro.codigo = int.tryParse(p0!),
                               margin: const EdgeInsets.all(8),
-                              inputFormatters: [onlyNumbers],
+                              inputFormatters: [utils.onlyNumbers],
                               controller: codController,
                               enter: () => enter(),
                               enabled: false,
@@ -214,7 +216,7 @@ class _DialogEdicaoCadastroTransferenciaState extends State<DialogEdicaoCadastro
                           Expanded(
                             flex: 2,
                             child: FormTextField(
-                              validator: (p0) => fieldValidation(p0, 'Nome'),
+                              validator: (p0) => utils.fieldValidation(p0, 'Nome'),
                               onSaved: (p0) => cadastro.nome = p0,
                               margin: const EdgeInsets.all(8),
                               controller: nomeController,

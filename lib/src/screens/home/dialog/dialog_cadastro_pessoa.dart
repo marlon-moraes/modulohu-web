@@ -9,6 +9,7 @@ import 'package:modulohu_web/src/models/pessoa_cadastro.dart';
 import 'package:modulohu_web/src/models/pessoa_cadastro_crud.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/services/api/req/pessoa_cadastro_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class DialogCadastroPessoa extends StatefulWidget {
   final PessoaCadastro pessoaCadastro;
@@ -31,6 +32,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
   var liberarCampos = false;
   var barraCarregamento = false;
   PessoaCadastroReq pessoaCadastroReq = PessoaCadastroReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +100,10 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
                           }
                         },
                         enter: () => widget.title == 'Beneficiário' ? incluirPessoa(false) : incluirPessoa(true),
-                        validator: (p0) => fieldValidation(p0, 'CPF'),
+                        validator: (p0) => utils.fieldValidation(p0, 'CPF'),
                         onSaved: (p0) => pessoa.cpf = p0,
                         margin: const EdgeInsets.all(8),
-                        inputFormatters: [mascaraCPF],
+                        inputFormatters: [utils.mascaraCPF],
                         controller: cpfController,
                         focusNode: cpfFocus,
                         text: 'CPF',
@@ -111,7 +113,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
                       flex: 2,
                       child: FormTextField(
                         enter: () => widget.title == 'Beneficiário' ? incluirPessoa(false) : incluirPessoa(true),
-                        validator: (p0) => fieldValidation(p0, 'Nome'),
+                        validator: (p0) => utils.fieldValidation(p0, 'Nome'),
                         onSaved: (p0) => pessoa.nome = p0,
                         margin: const EdgeInsets.all(8),
                         controller: nomeController,
@@ -128,7 +130,7 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
                       flex: 2,
                       child: FormTextField(
                         enter: () => widget.title == 'Beneficiário' ? incluirPessoa(false) : incluirPessoa(true),
-                        validator: (p0) => emailValidation(p0),
+                        validator: (p0) => utils.emailValidation(p0),
                         onSaved: (p0) => pessoa.email = p0,
                         margin: const EdgeInsets.all(8),
                         controller: emailController,
@@ -155,8 +157,8 @@ class _DialogCadastroPessoaState extends State<DialogCadastroPessoa> {
                           pessoa.celular = numero;
                         },
                         enter: () => widget.title == 'Beneficiário' ? incluirPessoa(false) : incluirPessoa(true),
-                        validator: (p0) => fieldValidation(p0, 'Telefone'),
-                        inputFormatters: [mascaraCelular],
+                        validator: (p0) => utils.fieldValidation(p0, 'Telefone'),
+                        inputFormatters: [utils.mascaraCelular],
                         margin: const EdgeInsets.all(8),
                         controller: telefoneController,
                         enabled: liberarCampos,

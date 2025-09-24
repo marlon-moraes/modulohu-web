@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/atendimento.dart';
 import 'package:modulohu_web/src/models/evento.dart';
 import 'package:modulohu_web/src/services/api/req/evento_req.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class EventosTab extends StatefulWidget {
   final Atendimento atendimentoCarregado;
@@ -20,6 +20,7 @@ class _EventosTabState extends State<EventosTab> {
   final scrollController = ScrollController();
   List<Evento> eventos = [];
   EventoReq eventoReq = EventoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class _EventosTabState extends State<EventosTab> {
                           children: [
                             Expanded(
                               child: Text(
-                                dateFormatter(item.dtInc ?? ''),
+                                utils.dateFormatter(item.dtInc ?? ''),
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.clip,
                                 textAlign: TextAlign.center,

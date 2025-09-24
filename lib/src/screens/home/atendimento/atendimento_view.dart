@@ -38,8 +38,8 @@ import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
 import 'package:modulohu_web/src/themes/theme.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/login_validation.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class AtendimentoView extends StatefulWidget {
   const AtendimentoView({super.key});
@@ -101,6 +101,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
   ResponsavelReq responsavelReq = ResponsavelReq();
   StatusReq statusReq = StatusReq();
   TipoAtendimentoReq tipoAtendimentoReq = TipoAtendimentoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -381,7 +382,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: FormTextField(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               controller: dtSolicitacaoController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               focusNode: dtSolicitacaoFocus,
               text: 'Data Solicitação',
               enabled: false,
@@ -463,7 +464,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
             child: FormTextField(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               onSaved: (p0) => filtroAtendimento.telefone = p0,
-              inputFormatters: [mascaraCelular],
+              inputFormatters: [utils.mascaraCelular],
               enabled: !isCanceladoFinalizado,
               controller: telefoneController,
               text: 'Telefone',
@@ -1204,7 +1205,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
   }
 
   Future<void> _carregarDados() async {
-    if (await validarLogin()) {
+    if (await utils.logonValidation()) {
       atendimentoCarregado = Atendimento();
       final retorno = await _sharedPref.read('pessoaLogada') ?? '{}';
       setState(() => pessoaLogada = UserAction.fromJson(jsonDecode(retorno)['usuarioActions']));
@@ -1219,14 +1220,14 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
         });
         _popularCampos();
       } else {
-        dtSolicitacaoController.text = dateFormatter(DateTime.now().toString());
+        dtSolicitacaoController.text = utils.dateFormatter(DateTime.now().toString());
         _dadosTimer = Timer.periodic(Duration(seconds: 1), (timer) {
           if (!mounted) {
             timer.cancel();
             return;
           }
           setState(() {
-            dtSolicitacaoController.text = dateFormatter(DateTime.now().toString());
+            dtSolicitacaoController.text = utils.dateFormatter(DateTime.now().toString());
             idResponsavelController.text = pessoaLogada.usuario?.id ?? '';
             nomeResponsavelController.text = pessoaLogada.usuario?.nome ?? '';
           });
@@ -1302,7 +1303,7 @@ class _AtendimentoViewState extends State<AtendimentoView> with TickerProviderSt
     protocoloController.text = atendimentoCarregado.protocolo ?? '';
     idStatusController.text = atendimentoCarregado.status?.id ?? '';
     nomeStatusController.text = atendimentoCarregado.status?.nome ?? '';
-    dtSolicitacaoController.text = dateFormatter(atendimentoCarregado.dtSolicitacao ?? '');
+    dtSolicitacaoController.text = utils.dateFormatter(atendimentoCarregado.dtSolicitacao ?? '');
     idBeneficiarioController.text = atendimentoCarregado.beneficiarioCarteirinha != null ? atendimentoCarregado.beneficiarioCarteirinha.toString() : '';
     codBeneficiarioController.text = atendimentoCarregado.beneficiarioCpf ?? '';
     nomeBeneficiarioController.text = atendimentoCarregado.beneficiarioNome ?? '';

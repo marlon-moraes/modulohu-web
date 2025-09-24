@@ -31,6 +31,7 @@ import 'package:modulohu_web/src/services/api/req/responsavel_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
 import 'package:modulohu_web/src/services/api/req/transferencia_req.dart';
 import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:modulohu_web/src/utils/utils.dart';
 
 class TransferenciaTabNew extends StatefulWidget {
   final UserAction pessoaLogada;
@@ -127,6 +128,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
   PrecaucaoReq precaucaoReq = PrecaucaoReq();
   TransferenciaReq transferenciaReq = TransferenciaReq();
   TipoInternacaoReq tipoInternacaoReq = TipoInternacaoReq();
+  Utils utils = Utils();
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +152,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             child: FormTextField(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               controller: dtSolicitacaoController,
-              inputFormatters: [mascaraDataHora],
+              inputFormatters: [utils.mascaraDataHora],
               text: 'Data Solicitação',
               enabled: false,
             ),
@@ -299,7 +301,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
     Widget telefone() {
       return FormTextField(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-        inputFormatters: [mascaraCelular],
+        inputFormatters: [utils.mascaraCelular],
         controller: telefoneController,
         text: 'Telefone',
       );
@@ -348,7 +350,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
       return FormTextField(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         controller: prontuarioController,
-        inputFormatters: [onlyNumbers],
+        inputFormatters: [utils.onlyNumbers],
         text: 'Prontuário',
       );
     }
@@ -358,7 +360,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         controller: carteirinhaController,
         text: 'Nº Carteirinha do Paciente',
-        inputFormatters: [onlyNumbers],
+        inputFormatters: [utils.onlyNumbers],
       );
     }
 
@@ -1074,7 +1076,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
       return FormTextField(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         controller: horaSaidaController,
-        inputFormatters: [mascaraHora],
+        inputFormatters: [utils.mascaraHora],
         text: 'Horário de Saída',
       );
     }
@@ -1083,7 +1085,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
       return FormTextField(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         controller: horaChegadaController,
-        inputFormatters: [mascaraHora],
+        inputFormatters: [utils.mascaraHora],
         text: 'Horário de Chegada',
       );
     }
@@ -1095,7 +1097,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
           Expanded(
             child: FormTextField(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              inputFormatters: [mascaraData],
+              inputFormatters: [utils.mascaraData],
               controller: dataController,
               text: 'Data',
             ),
@@ -1104,7 +1106,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
             margin: const EdgeInsets.fromLTRB(0, 4, 8, 4),
             child: InkWell(
               onTap: () {
-                if (!widget.isCanceladoFinalizado) selecionarData(dataController, null, context);
+                if (!widget.isCanceladoFinalizado) utils.dateSelector(dataController, null, context);
               },
               child: Ink(
                 decoration: BoxDecoration(
@@ -1127,7 +1129,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
         transferencia.idUni = widget.pessoaLogada.unidades?.first.idUni;
         transferencia.idAtendimentoCRA = IdAtendimentoCRA(id: widget.atendimentoCarregado.id);
         transferencia.nome = nomePacienteController.text;
-        transferencia.dtNascimento = dateFormatter2(dtNascimentoController.text, false);
+        transferencia.dtNascimento = utils.dateFormatter2(dtNascimentoController.text, false);
         transferencia.sexo = _sexoValue;
         transferencia.telefone = telefoneController.text;
         transferencia.prontuario = int.tryParse(prontuarioController.text);
@@ -1169,10 +1171,10 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
         transferencia.meioTransporteTransf = meioTransporteSelecionada.id != null ? meioTransporteSelecionada : null;
         transferencia.equipeTransporteTransf = equipeTransporteSelecionada.id != null ? equipeTransporteSelecionada : null;
         if (dataController.text.isNotEmpty && horaChegadaController.text.isNotEmpty) {
-          transferencia.dtChegada = dateFormatter2('${dataController.text} ${horaChegadaController.text}:00', true);
+          transferencia.dtChegada = utils.dateFormatter2('${dataController.text} ${horaChegadaController.text}:00', true);
         }
         if (dataController.text.isNotEmpty && horaSaidaController.text.isNotEmpty) {
-          transferencia.dtSaida = dateFormatter2('${dataController.text} ${horaSaidaController.text}:00', true);
+          transferencia.dtSaida = utils.dateFormatter2('${dataController.text} ${horaSaidaController.text}:00', true);
         }
         transferencia.idUsuAlt = IdAtendimentoCRA(id: widget.pessoaLogada.usuario?.id);
         var res = await transferenciaReq.reqIncluirTransferencia(transferencia, context);
@@ -1562,7 +1564,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
   }
 
   Future<void> _carregarDados() async {
-    dtSolicitacaoController.text = dateFormatter(widget.atendimentoCarregado.dtSolicitacao ?? '');
+    dtSolicitacaoController.text = utils.dateFormatter(widget.atendimentoCarregado.dtSolicitacao ?? '');
     nomeResponsavelController.text = widget.pessoaLogada.usuario?.nome ?? '';
     final resFuncionario = await responsavelReq.reqListarResponsavel(context);
     for (var element in resFuncionario) {
@@ -1583,7 +1585,7 @@ class _TransferenciaTabNewState extends State<TransferenciaTabNew> {
       final resTelefone = await pessoaCadastroReq.reqCarregarTelefonePessoa(resPessoa.first.pessoa?.autoId.toString() ?? '', context);
       if (!mounted) return;
       nomePacienteController.text = resPessoa.first.pessoa?.nome ?? '';
-      dtNascimentoController.text = dateFormatter(resPessoa.first.pessoa?.dtNascimento ?? '');
+      dtNascimentoController.text = utils.dateFormatter(resPessoa.first.pessoa?.dtNascimento ?? '');
       if (!mounted) return;
       setState(() => _sexoValue = resPessoa.first.pessoa?.sexo);
       telefoneController.text = resTelefone;
