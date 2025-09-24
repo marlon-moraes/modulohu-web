@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:bcrypt/bcrypt.dart';
+import 'package:components/components.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_pref/shared_pref.dart';
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/screens/auth/dialog/dialog_trocar_senha.dart';
 import 'package:modulohu_web/src/services/api/req_serv.dart';
 import 'package:modulohu_web/src/services/router/api_routes.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 /// Classe responsável pelas requisições de autenticação do usuário.
 ///

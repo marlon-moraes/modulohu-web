@@ -1,5 +1,4 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+part of '../components.dart';
 
 /// Um widget que adapta a interface do usuário com base no tamanho da tela.
 ///

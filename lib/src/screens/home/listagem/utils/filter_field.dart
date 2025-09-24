@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
+// 📦 Package imports:
+import 'package:components/components.dart';
 
 class FilterField extends StatelessWidget {
   final String label;
@@ -20,9 +20,7 @@ class FilterField extends StatelessWidget {
 
     return Row(
       children: [
-        Expanded(
-          child: FormTextField(controller: controller, inputFormatters: inputFormatters, margin: EdgeInsets.all(8), text: label, enabled: enabled),
-        ),
+        Expanded(child: FormTextField(controller: controller, inputFormatters: inputFormatters, margin: EdgeInsets.all(8), text: label, enabled: enabled)),
         Container(
           margin: EdgeInsets.all(8),
           child: InkWell(

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:go_router/go_router.dart';
+import 'package:shared_pref/shared_pref.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
@@ -16,7 +17,6 @@ import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/listagem/listagem_widget.dart';
 import 'package:modulohu_web/src/screens/home/side_menu.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 import 'package:modulohu_web/src/utils/utils.dart';
 
 class ListagemView extends StatefulWidget {

@@ -6,6 +6,10 @@ import 'dart:convert';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:components/components.dart';
+import 'package:shared_pref/shared_pref.dart';
+
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/atendimento.dart';
@@ -30,7 +34,6 @@ import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
 import 'package:modulohu_web/src/services/api/req/responsavel_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
 import 'package:modulohu_web/src/services/api/req/transferencia_req.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 import 'package:modulohu_web/src/utils/utils.dart';
 
 class TransferenciaTabNew extends StatefulWidget {

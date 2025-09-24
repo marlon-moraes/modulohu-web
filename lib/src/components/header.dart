@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:components/components.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/environment.dart' as env;
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/utils/utils.dart';
 
 /// Um widget que representa o cabeçalho da aplicação.

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_pref/shared_pref.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/environment.dart' as env;
@@ -17,7 +18,6 @@ import 'package:modulohu_web/src/services/api/req/carater_atendimento_req.dart';
 import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 class SideMenu extends StatefulWidget {
   final UserAction pessoaLogada;

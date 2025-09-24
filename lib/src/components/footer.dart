@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
-import 'package:modulohu_web/src/components/responsive.dart';
+// 📦 Package imports:
+import 'package:components/components.dart';
 
 /// Um widget que representa o rodapé da aplicação.
 ///

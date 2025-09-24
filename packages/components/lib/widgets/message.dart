@@ -1,5 +1,4 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+part of '../components.dart';
 
 /// Uma classe que representa uma mensagem a ser exibida.
 ///
@@ -41,7 +40,11 @@ class Message {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: TextStyle(color: theme.colorScheme.onTertiary), textAlign: TextAlign.center),
+        content: Text(
+          message,
+          style: TextStyle(color: theme.colorScheme.onTertiary),
+          textAlign: TextAlign.center,
+        ),
         backgroundColor: success ? theme.colorScheme.tertiary : theme.colorScheme.error,
         duration: Duration(seconds: duration),
       ),

@@ -1,8 +1,4 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
-// 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
+part of '../components.dart';
 
 /// Um widget que exibe um dialog de alerta com conteúdo personalizável.
 ///
@@ -77,22 +73,29 @@ class _AlertState extends State<Alert> {
           color: widget.isModal ? theme.colorScheme.secondary : null,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child:
-            widget.header!.isEmpty
-                ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (widget.success == true) Text('SUCESSO', style: TextStyle(color: theme.colorScheme.secondary, fontWeight: FontWeight.bold)),
-                    if (widget.success == false) Text('ATENÇÃO', style: TextStyle(color: theme.colorScheme.error, fontWeight: FontWeight.bold)),
-                    const SizedBox(),
-                    if (widget.title == true) CloseButton(onPressed: () => Navigator.pop(context), color: theme.colorScheme.error),
-                  ],
-                )
-                : Text(
-                  widget.header!,
-                  style: TextStyle(color: widget.isModal ? theme.colorScheme.onSecondary : theme.colorScheme.onSurface),
-                  textAlign: widget.isModal ? TextAlign.center : TextAlign.start,
-                ),
+        child: widget.header!.isEmpty
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (widget.success == true)
+                    Text(
+                      'SUCESSO',
+                      style: TextStyle(color: theme.colorScheme.secondary, fontWeight: FontWeight.bold),
+                    ),
+                  if (widget.success == false)
+                    Text(
+                      'ATENÇÃO',
+                      style: TextStyle(color: theme.colorScheme.error, fontWeight: FontWeight.bold),
+                    ),
+                  const SizedBox(),
+                  if (widget.title == true) CloseButton(onPressed: () => Navigator.pop(context), color: theme.colorScheme.error),
+                ],
+              )
+            : Text(
+                widget.header!,
+                style: TextStyle(color: widget.isModal ? theme.colorScheme.onSecondary : theme.colorScheme.onSurface),
+                textAlign: widget.isModal ? TextAlign.center : TextAlign.start,
+              ),
       ),
       titlePadding: const EdgeInsets.all(8),
       content: Scrollbar(
@@ -101,7 +104,9 @@ class _AlertState extends State<Alert> {
         trackVisibility: true,
         radius: Radius.zero,
         interactive: true,
-        child: SizedBox(child: SingleChildScrollView(controller: scrollController, child: widget.child)),
+        child: SizedBox(
+          child: SingleChildScrollView(controller: scrollController, child: widget.child),
+        ),
       ),
       actions: [
         const Divider(),

@@ -6,6 +6,9 @@ import 'dart:async';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:components/components.dart';
+
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/agenda_medica.dart';

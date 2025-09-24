@@ -8,7 +8,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:components/components.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_pref/shared_pref.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
@@ -38,7 +40,6 @@ import 'package:modulohu_web/src/services/api/req/status_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_atendimento_req.dart';
 import 'package:modulohu_web/src/themes/theme.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 import 'package:modulohu_web/src/utils/utils.dart';
 
 class AtendimentoView extends StatefulWidget {

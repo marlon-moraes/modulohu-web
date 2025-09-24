@@ -4,6 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// 📦 Package imports:
+import 'package:components/components.dart';
+
 // 🌎 Project imports:
 import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/user_action.dart';

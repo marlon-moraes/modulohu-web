@@ -7,10 +7,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:components/components.dart';
 import 'package:http/http.dart' as http;
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/cobertura.dart';
 import 'package:modulohu_web/src/models/contrato.dart';
 import 'package:modulohu_web/src/models/modulo_beneficiario.dart';

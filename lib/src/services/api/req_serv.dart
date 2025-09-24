@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:components/components.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
@@ -15,7 +16,6 @@ import 'package:logging_interceptor/logging_interceptor.dart';
 
 // 🌎 Project imports:
 import 'package:modulohu_web/environment.dart' as env;
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/utils/api_exception.dart';
 import 'package:modulohu_web/src/utils/constants.dart';
 

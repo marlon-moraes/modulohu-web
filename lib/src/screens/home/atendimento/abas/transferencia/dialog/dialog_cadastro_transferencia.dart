@@ -6,8 +6,11 @@ import 'dart:convert';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:components/components.dart';
+import 'package:shared_pref/shared_pref.dart';
+
 // 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/cadastros_transferencia_res.dart';
 import 'package:modulohu_web/src/models/user_action.dart';
 import 'package:modulohu_web/src/screens/home/atendimento/abas/transferencia/dialog/dialog_edicao_cadastro_transferencia.dart';
@@ -21,7 +24,6 @@ import 'package:modulohu_web/src/services/api/req/motivo_req.dart';
 import 'package:modulohu_web/src/services/api/req/motivo_solicitacao_req.dart';
 import 'package:modulohu_web/src/services/api/req/precaucao_req.dart';
 import 'package:modulohu_web/src/services/api/req/tipo_internacao_req.dart';
-import 'package:modulohu_web/src/utils/shared_pref.dart';
 
 class DialogCadastroTransferencia extends StatefulWidget {
   final String title;

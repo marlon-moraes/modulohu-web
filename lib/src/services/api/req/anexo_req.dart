@@ -9,11 +9,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:components/components.dart';
 import 'package:http/http.dart' as http;
 import 'package:web/web.dart' as web;
 
 // 🌎 Project imports:
-import 'package:modulohu_web/src/components/components.dart';
 import 'package:modulohu_web/src/models/anexo.dart';
 import 'package:modulohu_web/src/models/crud_anexo.dart';
 import 'package:modulohu_web/src/services/api/req_serv.dart';

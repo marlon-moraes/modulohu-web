@@ -6,9 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
-// 🌎 Project imports:
-import 'package:modulohu_web/src/utils/shared_pref.dart';
+import 'package:shared_pref/shared_pref.dart';
 
 /// Classe utilitária com funções e máscaras para uso geral na aplicação.
 ///
